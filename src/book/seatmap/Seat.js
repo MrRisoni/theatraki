@@ -7,25 +7,22 @@ class Seat extends Component {
     this.state = {
       className: '',
       cssColor: '',
+      disabledButton: false,
     };
   }
 
   componentDidMount() {
-    const seatChosen = false;
-    let seatFree = true;
-    let seatNotAvailable = false;
-
     let cssColor = '';
+    let className = ' seatFree ';
+    let disabledButton = false;
 
+    const filters = this.props.mapping.filter(stmp => ((stmp.rowId === this.props.rowId) && (stmp.colId === this.props.colId)));
 
-    const filters = this.props.mapping.filter(stmp => ((stmp.rowId == this.props.rowId) && (stmp.colId == this.props.colId)));
-    //  console.log('seat '  + this.props.rowId + ' ' + this.props.colId);
-
-    // console.log(filters);
 
     if (filters.length === 0) {
       cssColor = 'ffff';
-      seatFree = false;
+      className = '';
+      disabledButton = true;
       // console.log('not exists');
     } else {
       // if taken??
@@ -36,8 +33,8 @@ class Seat extends Component {
       cssColor = filters[0].zoneInfo.css;
 
       if (r > 70) {
-        seatNotAvailable = true;
-        seatFree = false;
+        disabledButton = true;
+        className = ' seatNotAvailable ';
         cssColor = '#888888';
       }
     }
@@ -45,6 +42,8 @@ class Seat extends Component {
 
     this.setState({
       cssColor: `#${cssColor}`,
+      disabledButton,
+      className,
     });
   }
 
@@ -52,6 +51,7 @@ class Seat extends Component {
     return (
 
       <button
+        disabled={this.state.disabledButton}
         type="button"
         style={{ background: this.state.cssColor }}
         className={`seatBtn ${this.state.className}`}
