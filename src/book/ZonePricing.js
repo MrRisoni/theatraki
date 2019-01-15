@@ -1,6 +1,10 @@
 import React from 'react';
 
 const ZonePricing = (props) => {
+    console.log('zonepricing')
+    console.log(props);
+
+
     return (
         <section>
             <div className="row">
@@ -20,27 +24,32 @@ const ZonePricing = (props) => {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="zonep in getSeatPrices">
-                            <td>{{zonep.zoneName}}</td>
-                            <td style="background-color:#${zonep.css}" data-v-5072c378>{{zonep.css}}  </td>
+                        {props.zones.map(zonep => {
+                            return (<tr>
+                            <td>{zonep.zone.title}</td>
+                            <td   style={{ color: zonep.zone.css  }}  >{zonep.zone.css}  </td>
+                                <td>
 
-                            <td>
-                                <p v-if="zonep.type === 'ADT'">
-                                    Adult
-                                </p>
-                                <p v-if="zonep.type === 'ELD'">
-                                    Elder
-                                </p>
-                                <p v-if="zonep.type === 'STD'">
-                                    Student
-                                </p>
-                                <p v-if="zonep.type === 'CHD'">
-                                    Child
-                                </p>
 
-                            </td>
-                            <td>{{zonep.price.toFixed(2)}}</td>
-                        </tr>
+                                    {zonep.typ.title === 'ADT' &&
+                                        <p>Adult</p>
+                                    }
+                                    {zonep.typ.title === 'CHD' &&
+                                    <p>Child</p>
+                                    }
+                                    {zonep.typ.title === 'ELD' &&
+                                    <p>Elder</p>
+                                    }
+                                    {zonep.typ.title === 'STD' &&
+                                    <p>Student</p>
+                                    }
+                                </td>
+
+                            <td>{zonep.price.toFixed(2)}</td>
+                            </tr>)
+                        })}
+
+
                         </tbody>
                     </table>
 

@@ -5,11 +5,15 @@ import SpectatorList from "./people/SpectatorList";
 import Contact from './people/Contact';
 import Payment from './people/Payment';
 import PriceBox from './PriceBox';
+import ZonePricing from "./ZonePricing";
 
 class BookSpectacle extends Component {
     constructor(props) {
         super(props);
         this.state = { mapping:[], fetched:false,
+            zones:[],zonesFetched:false,
+            performanceDetails:{},
+            takenSeats:[],
             spectatorsList: [
                 {
                     id: 0,
@@ -27,17 +31,22 @@ class BookSpectacle extends Component {
     componentDidMount()
     {
         const self = this;
-        axios.get('http://localhost:8080/api/seatmap').then(rsp => {
-            console.log(rsp.data);
+        console.log(process.ENV);
+        axios.all([
+            axios.get('http://localhost:8080/api/seatmap'),
+            axios.get('http://localhost:8080/api/performance'),
+            axios.get('http://localhost:8080/api/seats')
+        ]).then(axios.spread(function (seatMap, perform, taken) {
             self.setState({
-                mapping:rsp.data,
-                fetched:true
+                mapping:seatMap.data,
+                fetched:true,
+                performanceDetails:perform.data,
+                takenSeats:taken.data,
             })
-
-        }).catch((err) => {
+        })).catch((err) => {
             console.log(err);
 
-          //  this.$store.commit('mapError',err);
+          console.log(err);
 
         });
 
@@ -47,7 +56,7 @@ class BookSpectacle extends Component {
         console.log('env');
         console.log(process.env);
         return (
-            <section> Component BookSpectacle
+            <section>
 
 
 
@@ -56,6 +65,9 @@ class BookSpectacle extends Component {
                     <SeatMap mapping={this.state.mapping}/>
                  }
 
+                {this.state.fetched &&
+                    <ZonePricing zones={this.state.performanceDetails.pricesList}/>
+                }
 
                 <div className="row">
                     <div className="col-8 offset-1">
@@ -79,6 +91,8 @@ class BookSpectacle extends Component {
                         </div>
                     </div>
                 </div>
+
+
 
                 <SpectatorList spectatorsList={this.state.spectatorsList}/>
 
