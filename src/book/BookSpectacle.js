@@ -28,6 +28,9 @@ class BookSpectacle extends Component {
 
     }
     render() {
+
+        console.log('env');
+        console.log(process.env);
         return (
             <div> Component BookSpectacle
 
