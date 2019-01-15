@@ -32,7 +32,7 @@ class BookSpectacle extends Component {
         console.log('env');
         console.log(process.env);
         return (
-            <div> Component BookSpectacle
+            <section> Component BookSpectacle
 
 
 
@@ -40,7 +40,7 @@ class BookSpectacle extends Component {
                 {this.state.fetched  &&
                     <SeatMap mapping={this.state.mapping}/>
                  }
-            </div>
+            </section>
 
         );
     }

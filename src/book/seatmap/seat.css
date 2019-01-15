@@ -8,3 +8,16 @@
     border-radius: 0;
 
 }
+
+
+.seatFree {
+    cursor:pointer;
+}
+
+.seatChosen {
+    pointer-events: none;
+}
+
+.seatNotAvailable {
+    pointer-events: none;
+}

@@ -1,15 +1,22 @@
 import React, {Component} from 'react';
 import SeatRows from './SeatRows';
+import lodash from 'lodash';
 
 class SeatMap extends Component {
+    constructor(props)
+    {
+        super(props);
+    }
     render() {
-        const rows = [1,2,3,4,5,6,7,8,9,10]
+        const rows =  lodash.range(1,25)
 
         return (
             <section>
 
                 {rows.map(idx => {
-                    return ( <SeatRows rowId={idx}/>)
+                    return (<div className="row"><SeatRows
+                        mapping={this.props.mapping}
+                        rowId={idx}/></div>)
                 })}
 
 
