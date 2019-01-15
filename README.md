@@ -2,7 +2,7 @@
 
 Theater Booking App (inspired from Viva) (WIP)
 
-https://protected-reef-47929.herokuapp.com/#/book
+https://protected-reef-47929.herokuapp.com/book
 
 
 
