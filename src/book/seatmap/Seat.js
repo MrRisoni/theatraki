@@ -26,14 +26,13 @@ class Seat extends Component {
       disabledButton = true;
       // console.log('not exists');
     } else {
-        cssColor = filters[0].zoneInfo.css;
+      cssColor = filters[0].zoneInfo.css;
 
-        if (this.props.takenSeats.indexOf(filters[0].seatName) > -1) {
-            disabledButton = true;
-            className = ' seatNotAvailable ';
-            cssColor = '#888888';
-        }
-
+      if (this.props.takenSeats.indexOf(filters[0].seatName) > -1) {
+        disabledButton = true;
+        className = ' seatNotAvailable ';
+        cssColor = '#888888';
+      }
     }
 
 

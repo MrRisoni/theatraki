@@ -1,43 +1,45 @@
-import React, {Component} from 'react';
-import SeatRows from './SeatRows';
+import React, { Component } from 'react';
 import lodash from 'lodash';
+import SeatRows from './SeatRows';
 import './seatmap.css';
 
 
 class SeatMap extends Component {
-    constructor(props)
-    {
-        super(props);
-    }
-    render() {
-        const rows =  lodash.range(1,25)
+  constructor(props) {
+    super(props);
+  }
 
-        return (
-            <section>
+  render() {
+    const rows = lodash.range(1, 25);
 
-                {rows.map(idx => {
-                    return (<div className="row"><SeatRows
-                        takenSeats={this.props.takenSeats}
-                        mapping={this.props.mapping}
-                        rowId={idx}/></div>)
-                })}
+    return (
+      <section>
+
+        {rows.map(idx => (
+          <div className="row">
+            <SeatRows
+              takenSeats={this.props.takenSeats}
+              mapping={this.props.mapping}
+              rowId={idx}
+            />
+          </div>
+        ))}
 
 
         <div className="row stageDiv">
-            <div className="col-6 offset-2">
-                <div className="alert alert-dark" role="alert">
+          <div className="col-6 offset-2">
+            <div className="alert alert-dark" role="alert">
+
                     Stage
-                </div>
             </div>
+          </div>
         </div>
 
 
-            </section>
+      </section>
 
-        );
-    }
+    );
+  }
 }
 
 export default SeatMap;
-
-

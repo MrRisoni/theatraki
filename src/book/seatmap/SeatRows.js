@@ -1,29 +1,31 @@
 import React from 'react';
+import lodash from 'lodash';
 import Seat from './Seat';
-import lodash from "lodash";
 
 const SeatRows = (props) => {
+  const colsArray = lodash.range(1, 65);
 
-    const colsArray =  lodash.range(1,65)
+  const seats = colsArray.map(col => (
+    <Seat
+      rowId={props.rowId}
+      colId={col}
+      takenSeats={props.takenSeats}
+      mapping={props.mapping}
+    />
+  ));
 
-    let seats = colsArray.map(col => {
-       return (<Seat rowId={props.rowId} colId={col}
-                     takenSeats={props.takenSeats}
-                     mapping={props.mapping}/>);
-    });
+  return (
 
-    return (
+    <div className="SeatRows">
+      <div className="row">
+        <div className="col-12">
 
-        <div className="SeatRows">
-            <div className="row">
-                <div className="col-12">
-
-                    {seats}
-            </div>
-
+          {seats}
         </div>
-</div>
-    )
+
+      </div>
+    </div>
+  );
 };
 
 export default SeatRows;
