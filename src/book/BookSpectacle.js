@@ -13,7 +13,7 @@ class BookSpectacle extends Component {
     {
         const self = this;
         axios.get('http://localhost:8080/api/seatmap').then(rsp => {
-
+            console.log(rsp.data);
             self.setState({
                 mapping:rsp.data,
                 fetched:true
