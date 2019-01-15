@@ -16,6 +16,7 @@ class Seat extends Component {
     let className = ' seatFree ';
     let disabledButton = false;
 
+
     const filters = this.props.mapping.filter(stmp => ((stmp.rowId === this.props.rowId) && (stmp.colId === this.props.colId)));
 
 
@@ -25,18 +26,14 @@ class Seat extends Component {
       disabledButton = true;
       // console.log('not exists');
     } else {
-      // if taken??
+        cssColor = filters[0].zoneInfo.css;
 
-      const min = 1;
-      const max = 100;
-      const r = Math.random() * (max - min) + min;
-      cssColor = filters[0].zoneInfo.css;
+        if (this.props.takenSeats.indexOf(filters[0].seatName) > -1) {
+            disabledButton = true;
+            className = ' seatNotAvailable ';
+            cssColor = '#888888';
+        }
 
-      if (r > 70) {
-        disabledButton = true;
-        className = ' seatNotAvailable ';
-        cssColor = '#888888';
-      }
     }
 
 

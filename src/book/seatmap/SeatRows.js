@@ -7,7 +7,9 @@ const SeatRows = (props) => {
     const colsArray =  lodash.range(1,65)
 
     let seats = colsArray.map(col => {
-       return (<Seat rowId={props.rowId} colId={col} mapping={props.mapping}/>);
+       return (<Seat rowId={props.rowId} colId={col}
+                     takenSeats={props.takenSeats}
+                     mapping={props.mapping}/>);
     });
 
     return (

@@ -17,6 +17,7 @@ class SeatMap extends Component {
 
                 {rows.map(idx => {
                     return (<div className="row"><SeatRows
+                        takenSeats={this.props.takenSeats}
                         mapping={this.props.mapping}
                         rowId={idx}/></div>)
                 })}

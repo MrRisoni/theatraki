@@ -26,7 +26,40 @@ class BookSpectacle extends Component {
                     selectedForSeat: true,
                 },
             ]}
+
+            this.addSpectator = this.addSpectator.bind(this);
     }
+
+    addSpectator()
+    {
+
+        let lastActiveHumanId = 0;
+        this.state.spectatorsList.forEach((px) => {
+            if (px.active === true) {
+                lastActiveHumanId++;
+            }
+        });
+        lastActiveHumanId++;
+
+        let spectatesList = this.state.spectatorsList;
+
+        spectatesList.push({
+            id: this.state.spectatorsList.length,
+            humanId: lastActiveHumanId,
+            active: true,
+            type: 'ADT',
+            seat: '',
+            tktNo: '',
+            price:0,
+            selectedForSeat:false
+        });
+
+        this.setState({
+            spectatorsList: spectatesList,
+        })
+
+    }
+
 
     componentDidMount()
     {
@@ -62,7 +95,7 @@ class BookSpectacle extends Component {
 
 
                 {this.state.fetched  &&
-                    <SeatMap mapping={this.state.mapping}/>
+                    <SeatMap mapping={this.state.mapping} takenSeats={this.state.takenSeats}/>
                  }
 
                 {this.state.fetched &&
