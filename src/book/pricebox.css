@@ -1,0 +1,11 @@
+
+.PriceBox {
+    margin-top: 5%;
+    margin-bottom: 6%;
+}
+
+.PriceBox .card-footer {
+    color: yellow;
+    text-align: center;
+
+}

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import SeatRows from './SeatRows';
 import lodash from 'lodash';
+import './seatmap.css';
+
 
 class SeatMap extends Component {
     constructor(props)
