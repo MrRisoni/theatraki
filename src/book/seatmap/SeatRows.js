@@ -9,6 +9,9 @@ const SeatRows = (props) => {
     <Seat
       rowId={props.rowId}
       colId={col}
+      spectatorsList={props.spectatorsList}
+      selectedSeats={props.selectedSeats}
+      updateSeat={props.updateSeat}
       takenSeats={props.takenSeats}
       mapping={props.mapping}
     />

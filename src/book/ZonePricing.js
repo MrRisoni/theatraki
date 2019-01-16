@@ -10,12 +10,28 @@ const ZonePricing = (props) => {
       <div className="row">
         <div className="col-8 offset-1">
           <div className="alert alert-primary" role="alert">
+            <div className="row">
+              <div className="col-6">
 
-                        Zone Prices
+                                Zone Prices
+              </div>
+
+              <div className="col-2">
+                <button
+                  className="btn btn-sm btn-dark btn-block btnToggle"
+                  data-toggle="collapse"
+                  data-target="#zonePricesCollapse"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span>Toggle</span>
+                </button>
+              </div>
+            </div>
+
           </div>
 
-
-          <table className="table table-bordered table-striped table-sm ">
+          <table id="zonePricesCollapse" className="show table table-bordered table-striped table-sm ">
             <thead>
               <tr>
                 <th scope="col">Zone</th>
@@ -36,7 +52,7 @@ const ZonePricing = (props) => {
 
 
                     {zonep.typ.title === 'ADT'
-                                        && <p>Adult</p>
+                                    && <p>Adult</p>
                                     }
                     {zonep.typ.title === 'CHD'
                                     && <p>Child</p>

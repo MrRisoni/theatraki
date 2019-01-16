@@ -32,6 +32,23 @@ class BookSpectacle extends Component {
     };
 
     this.addSpectator = this.addSpectator.bind(this);
+    this.updateSeat = this.updateSeat.bind(this);
+  }
+
+
+  updateSeat(rowId,colId)
+  {
+      const seatName = this.state.mapping.filter(stmp => ((stmp.rowId === rowId) && (stmp.colId === colId)))[0].seatName;
+      console.log('picked ' + seatName);
+      let spectList = this.state.spectatorsList;
+      let spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
+      spect.seat = seatName;
+
+      this.setState({
+          spectatorsList : spectList,
+      })
+
+
   }
 
   addSpectator() {
@@ -62,6 +79,7 @@ class BookSpectacle extends Component {
   }
 
 
+
   componentDidMount() {
     const self = this;
     console.log(process.ENV);
@@ -86,46 +104,29 @@ class BookSpectacle extends Component {
   render() {
     console.log('env');
     console.log(process.env);
-    return (
+
+    const selectedSeats = this.state.spectatorsList.filter(spl => spl.active === true).map(actSpl => actSpl.seat);
+
+      console.log('selectedSeats');
+      console.log(selectedSeats);
+
+
+      return (
       <section>
 
 
         {this.state.fetched
-                && <SeatMap mapping={this.state.mapping} takenSeats={this.state.takenSeats} />
+                && <SeatMap mapping={this.state.mapping}
+                            spectatorsList={this.state.spectatorsList}
+                            selectedSeats={selectedSeats}
+                            takenSeats={this.state.takenSeats}
+                            updateSeat={this.updateSeat}/>
                  }
 
         {this.state.fetched
                     && <ZonePricing zones={this.state.performanceDetails.pricesList} />
                 }
 
-        <div className="row">
-          <div className="col-8 offset-1">
-
-            <div className="alert alert-primary" role="alert" id="spectatorAlert">
-              <div className="row">
-                <div className="col-5">
-                  <button type="button" className="btn btn-danger">Clear Spectators</button>
-                </div>
-                <div className="col-4">
-                  <button type="button" className="btn btn-warning">Reset Seats</button>
-                </div>
-
-                <div className="col-2">
-                  <button
-                    className="btn btn-sm btn-dark btn-block btnToggle"
-data-toggle="collapse"
-                    data-target="#spectatorsCollapse"
-aria-expanded="false"
-                    aria-controls="collapseExample"
-                  >
-<span>Toggle</span>
-                  </button>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
 
 
         <SpectatorList spectatorsList={this.state.spectatorsList} />
