@@ -68,7 +68,7 @@ const ZonePricing = (props) => {
                                             }
                                         </td>
 
-                                        <td>{zonep.price.toFixed(2)}</td>
+                                        <td>{zonep.price.toFixed(2)} &euro;</td>
                                     </tr>);
                             })}
 

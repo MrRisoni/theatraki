@@ -33,23 +33,41 @@ class BookSpectacle extends Component {
 
     this.addSpectator = this.addSpectator.bind(this);
     this.updateSeat = this.updateSeat.bind(this);
+    this.pickSeat = this.pickSeat.bind(this);
+
   }
 
-
-  updateSeat(rowId,colId)
+  pickSeat(spectId)
   {
-      const seatName = this.state.mapping.filter(stmp => ((stmp.rowId === rowId) && (stmp.colId === colId)))[0].seatName;
-      console.log('picked ' + seatName);
+    console.log('pcik eat ofr ' + spectId);
       let spectList = this.state.spectatorsList;
-      let spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
-      spect.seat = seatName;
+      spectList.forEach(sp => {
+          sp.selectedForSeat = false;
+          if (sp.id == spectId) {
+              sp.selectedForSeat = true;
 
-
-      this.setState({
-          spectatorsList : spectList,
+          }
       })
 
+      this.setState({
+          spectatorsList: spectList,
+      });
 
+  }
+
+  updateSeat(rowId, colId, zoneId) {
+    const seatName = this.state.mapping.filter(stmp => ((stmp.rowId === rowId) && (stmp.colId === colId)))[0].seatName;
+    console.log(`picked ${seatName}`);
+    let spectList = this.state.spectatorsList;
+      let spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
+    spect.seat = seatName;
+    console.log(this.state.zones);
+    spect.price = this.state.zones.filter(zn => ((zn.id == zoneId) && (zn.typ.title == spect.type)))[0].price;
+
+
+    this.setState({
+      spectatorsList: spectList,
+    });
   }
 
   addSpectator() {
@@ -91,6 +109,7 @@ class BookSpectacle extends Component {
         mapping: seatMap.data,
         fetched: true,
         performanceDetails: perform.data,
+        zones: perform.data.pricesList,
         takenSeats: taken.data,
       });
     })).catch((err) => {
@@ -105,17 +124,20 @@ class BookSpectacle extends Component {
     const selectedSeats = this.state.spectatorsList.filter(spl => spl.active === true).map(actSpl => actSpl.seat);
 
 
-
-      return (
+    return (
       <section>
 
 
         {this.state.fetched
-                && <SeatMap spectatorsList={this.state.spectatorsList}
-                             mapping={this.state.mapping}
-                            selectedSeats={selectedSeats}
-                            takenSeats={this.state.takenSeats}
-                            updateSeat={this.updateSeat}/>
+                && (
+                <SeatMap
+                  spectatorsList={this.state.spectatorsList}
+                  mapping={this.state.mapping}
+                  selectedSeats={selectedSeats}
+                  takenSeats={this.state.takenSeats}
+                  updateSeat={this.updateSeat}
+                />
+                )
                  }
 
         {this.state.fetched
@@ -123,13 +145,13 @@ class BookSpectacle extends Component {
                 }
 
 
-
-        <SpectatorList spectatorsList={this.state.spectatorsList} />
+        <SpectatorList spectatorsList={this.state.spectatorsList}
+                       pickSeat={this.pickSeat}/>
 
 
         <div className="row">
           <div className="col-4 offset-4">
-            <button className="btn btn-primary btn-success" id="addSpectButt">
+            <button className="btn btn-primary btn-success" id="addSpectButt" onClick={this.addSpectator}>
               <span>Add Spectator</span>
             </button>
           </div>
@@ -140,7 +162,7 @@ class BookSpectacle extends Component {
 
         <Payment />
 
-        <PriceBox />
+        <PriceBox spectatorsList={this.state.spectatorsList} />
 
 
       </section>

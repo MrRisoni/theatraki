@@ -10,7 +10,7 @@ class Seat extends Component {
   }
 
   clickSeat() {
-    this.props.updateSeat(this.props.rowId, this.props.colId);
+    this.props.updateSeat(this.props.rowId, this.props.colId, this.props.zoneId);
 
 
   }

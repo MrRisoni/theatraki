@@ -4,14 +4,26 @@ import './spectator.css';
 class Spectator extends Component {
     constructor(props){
         super(props);
+
+        this.pickSeat = this.pickSeat.bind(this);
+
+   }
+
+   pickSeat()
+   {
+    this.props.pickSeat(this.props.specData.id);
    }
     render() {
+
+
+        const colorClass = (this.props.specData.selectedForSeat) ? ' bg-success ' : ' bg-info ';
+
         return (
             <section className="spectatorElem">
 
 
                 <div className="card">
-                    <div className="card-header bg-info">
+                    <div className={`card-header ${colorClass}`}>
                         <div className="row">
                             <div className="col-5">
                                 Spectator # {this.props.specData.humanId}
@@ -21,7 +33,7 @@ class Spectator extends Component {
                             <div className="col-2"><i className="fas fa-eye"/></div>
 
                             <div className="col-4">
-                                <button className="btn btn-primary btn-warning">Pick Seat</button>
+                                <button className="btn btn-primary btn-warning" onClick={this.pickSeat}>Pick Seat</button>
                             </div>
 
                         </div>
@@ -52,7 +64,7 @@ class Spectator extends Component {
                             </div>
 
                             <div className="col-4">
-                                Seat Cost
+                                Seat Cost {this.props.specData.price} &euro;
                             </div>
 
 
@@ -63,7 +75,7 @@ class Spectator extends Component {
                         <div className="row">
                             <div className="col-5 offset-4">
                                 <button  className="btn btn-danger">
-                                   RemoveSpectato</button>
+                                   Remove Spectator</button>
                             </div>
                         </div>
                     </div>
