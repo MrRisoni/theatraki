@@ -6,6 +6,12 @@ import Contact from './people/Contact';
 import Payment from './people/Payment';
 import PriceBox from './PriceBox';
 import ZonePricing from './ZonePricing';
+import {get_onlyChildSpects,
+    get_selectedSpectType,
+    get_selectedSeats,
+    get_spectatorCount} from './helpers';
+
+import './styles/bookspectacle.css';
 
 class BookSpectacle extends Component {
   constructor(props) {
@@ -13,7 +19,7 @@ class BookSpectacle extends Component {
     this.state = {
       mapping: [],
       fetched: false,
-      zones:[],
+      zones: [],
       performanceDetails: {},
       takenSeats: [],
       spectatorsList: [
@@ -42,7 +48,7 @@ class BookSpectacle extends Component {
     const spectList = this.state.spectatorsList;
     spectList.forEach((sp) => {
       sp.selectedForSeat = false;
-      if (sp.id == spectId) {
+      if (sp.id === spectId) {
         sp.active = false;
       }
     });
@@ -56,7 +62,7 @@ class BookSpectacle extends Component {
     const spectList = this.state.spectatorsList;
     spectList.forEach((sp) => {
       sp.selectedForSeat = false;
-      if (sp.id == spectId) {
+      if (sp.id === spectId) {
         sp.selectedForSeat = true;
       }
     });
@@ -68,34 +74,30 @@ class BookSpectacle extends Component {
 
 
   changeSpectType(newType, spectId) {
-      // if child and one pax issue alert and dont change
-      // if seat selected check if supported by this type if not alert
-      // show seats that are supported by this type
+    // if child and one pax issue alert and dont change
+    // if seat selected check if supported by this type if not alert
+    // show seats that are supported by this type
+    const spectList = this.state.spectatorsList;
+    spectList.forEach((sp) => {
+      if (sp.id === spectId) {
+        sp.type = newType;
+        sp.price =0;
+        sp.seat = '';
+      }
+    });
 
-
-      const spectList = this.state.spectatorsList;
-      spectList.forEach((sp) => {
-          if (sp.id == spectId) {
-              sp.type = newType;
-          }
-      });
-
-      console.log('changed type ');
-      console.log(spectList);
-      this.setState({
-          spectatorsList: spectList,
-      });
+    this.setState({
+      spectatorsList: spectList,
+    });
   }
 
 
   updateSeat(seatName, zoneId) {
-    console.log(`${'update eat ' + '  '}${seatName} ${zoneId}`);
     const spectList = this.state.spectatorsList;
     const spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
     spect.seat = seatName;
     spect.zoneId = zoneId;
-    console.log(this.state.performanceDetails.pricesList);
-    spect.price = this.state.performanceDetails.pricesList.filter(zn => ((zn.zone.id == zoneId) && (zn.typ.title == spect.type)))[0].price;
+    spect.price = this.state.performanceDetails.pricesList.filter(zn => ((zn.zone.id === zoneId) && (zn.typ.title === spect.type)))[0].price;
 
     this.setState({
       spectatorsList: spectList,
@@ -155,10 +157,10 @@ class BookSpectacle extends Component {
     console.log('env');
     console.log(process.env);
 
-    const selectedSeats = this.state.spectatorsList.filter(spl => spl.active === true).map(actSpl => actSpl.seat);
-    const selectedSpectType = this.state.spectatorsList.filter(spl => (spl.active === true && spl.selectedForSeat === true))[0].type;
-    const oneChildSpect =  (this.state.spectatorsList.filter(spl => (spl.active === true && spl.type === 'CHD')).length ==1);
-
+    const selectedSeats =  get_selectedSeats(this.state.spectatorsList);
+    const selectedSpectType = get_selectedSpectType(this.state.spectatorsList);
+    const onlyChildSpects = get_onlyChildSpects(this.state.spectatorsList);
+    const  spectatorCount = get_spectatorCount(this.state.spectatorsList);
 
     return (
       <section>
@@ -183,10 +185,10 @@ class BookSpectacle extends Component {
                 }
 
 
-warning for child
         <SpectatorList
           spectatorsList={this.state.spectatorsList}
-          oneChildSpect={oneChildSpect}
+          oneChildSpect={onlyChildSpects}
+          spectatorCount={spectatorCount}
           removeSpect={this.removeSpect}
           changeSpectType={this.changeSpectType}
           pickSeat={this.pickSeat}
@@ -204,8 +206,8 @@ warning for child
 
         <Contact />
 
-          {oneChildSpect === false &&
-            <Payment/>
+        {onlyChildSpects === false
+            && <Payment />
           }
 
         <PriceBox spectatorsList={this.state.spectatorsList} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import './pricebox.css';
+import './styles/pricebox.css';
 
 const PriceBox = (props) => {
   let totalPrice = props.spectatorsList

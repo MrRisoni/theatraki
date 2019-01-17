@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './spectator.css';
+import '../styles/spectator.css';
 
 class Spectator extends Component {
   constructor(props) {
@@ -119,13 +119,16 @@ id="exampleFormControlSelect1"
               </div>
               }
 
-            <div className="row">
-              <div className="col-5 offset-4">
-                <button className="btn btn-danger" onClick={this.removeSpect}>
-                    Remove Spectator
-                </button>
-              </div>
-            </div>
+              {this.props.spectatorCount > 1 &&
+                <div className="row">
+                  <div className="col-5 offset-4">
+                    <button className="btn btn-danger" onClick={this.removeSpect}>
+                        Remove Spectator
+                    </button>
+                  </div>
+                </div>
+              }
+
           </div>
 
         </div>

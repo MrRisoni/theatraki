@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import './seat.css';
-import SeatRows from "./SeatRows";
+import '../styles/seat.css';
 
 class Seat extends Component {
   constructor(props) {
@@ -11,7 +10,7 @@ class Seat extends Component {
   }
 
   clickSeat() {
-      console.log(this.props);
+    console.log(this.props);
     this.props.updateSeat(this.props.seatName, this.props.zoneId);
   }
 
@@ -27,31 +26,26 @@ class Seat extends Component {
       className = '';
       disabledButton = true;
     } else {
+      // check if this seat is supported by the current selected spectator type
+      const priceExists = this.props.pricing.filter(pr => pr.typ.title === this.props.selectedSpecType && pr.zone.id === this.props.zoneId).length > 0;
+      if (priceExists === true) {
+        cssColor = `#${this.props.css}`;
 
-        //check if this seat is supported by the current selected spectator type
-        const priceExists = this.props.pricing.filter(pr =>  pr.typ.title === this.props.selectedSpecType && pr.zone.id === this.props.zoneId).length >0;
-        if (priceExists === true) {
-
-            cssColor = `#${this.props.css}`;
-
-            if (this.props.takenSeats.indexOf(this.props.seatName) > -1) {
-                disabledButton = true;
-                className = ' seatNotAvailable ';
-                cssColor = '#888888';
-            }
-            if (this.props.selectedSeats.indexOf(this.props.seatName) > -1) {
-                cssColor = 'yellow';
-                className = ' seatChosen ';
-            }
+        if (this.props.takenSeats.indexOf(this.props.seatName) > -1) {
+          disabledButton = true;
+          className = ' seatNotAvailable ';
+          cssColor = '#888888';
         }
-        else {
-            console.log('not supported ');
-            cssColor = '';
-            disabledButton = true;
-            className = ' seatNotSupported ';
+        if (this.props.selectedSeats.indexOf(this.props.seatName) > -1) {
+          cssColor = 'yellow';
+          className = ' seatChosen ';
         }
-
-
+      } else {
+        console.log('not supported ');
+        cssColor = '';
+        disabledButton = true;
+        className = ' seatNotSupported ';
+      }
     }
 
     return { cssColor, disabledButton, className };

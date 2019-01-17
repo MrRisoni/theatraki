@@ -36,7 +36,7 @@ const ZonePricing = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {props.zones.map((zonep) => {
+                {props.zones.map(zonep => {
                   const key = `zpkey_${zonep.zone.id}_${zonep.typ.title}`;
 
                   return (
