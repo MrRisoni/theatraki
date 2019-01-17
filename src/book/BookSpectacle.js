@@ -6,10 +6,12 @@ import Contact from './people/Contact';
 import Payment from './people/Payment';
 import PriceBox from './PriceBox';
 import ZonePricing from './ZonePricing';
-import {get_onlyChildSpects,
-    get_selectedSpectType,
-    get_selectedSeats,
-    get_spectatorCount} from './helpers';
+import {
+  get_onlyChildSpects,
+  get_selectedSpectType,
+  get_selectedSeats,
+  get_spectatorCount,
+} from './helpers';
 
 import './styles/bookspectacle.css';
 
@@ -42,7 +44,40 @@ class BookSpectacle extends Component {
     this.pickSeat = this.pickSeat.bind(this);
     this.removeSpect = this.removeSpect.bind(this);
     this.changeSpectType = this.changeSpectType.bind(this);
+    this.clearSpectators = this.clearSpectators.bind(this);
+    this.resetSeats = this.resetSeats.bind(this);
   }
+
+  clearSpectators() {
+    this.setState({
+      spectatorsList: [
+        {
+          id: 0,
+          humanId: 1,
+          type: 'ADT',
+          seat: '',
+          tktNo: '',
+          zoneId: 0,
+          active: true,
+          price: 0,
+          selectedForSeat: true,
+        },
+      ],
+    });
+  }
+
+  resetSeats() {
+    const spectList = this.state.spectatorsList;
+    spectList.forEach((sp) => {
+      sp.seat = '';
+      sp.price = 0;
+    });
+
+    this.setState({
+      spectatorsList: spectList,
+    });
+  }
+
 
   removeSpect(spectId) {
     const spectList = this.state.spectatorsList;
@@ -81,7 +116,7 @@ class BookSpectacle extends Component {
     spectList.forEach((sp) => {
       if (sp.id === spectId) {
         sp.type = newType;
-        sp.price =0;
+        sp.price = 0;
         sp.seat = '';
       }
     });
@@ -157,10 +192,10 @@ class BookSpectacle extends Component {
     console.log('env');
     console.log(process.env);
 
-    const selectedSeats =  get_selectedSeats(this.state.spectatorsList);
+    const selectedSeats = get_selectedSeats(this.state.spectatorsList);
     const selectedSpectType = get_selectedSpectType(this.state.spectatorsList);
     const onlyChildSpects = get_onlyChildSpects(this.state.spectatorsList);
-    const  spectatorCount = get_spectatorCount(this.state.spectatorsList);
+    const spectatorCount = get_spectatorCount(this.state.spectatorsList);
 
     return (
       <section>
@@ -186,6 +221,8 @@ class BookSpectacle extends Component {
 
 
         <SpectatorList
+          resetSeats={this.resetSeats}
+          clearSpectators={this.clearSpectators}
           spectatorsList={this.state.spectatorsList}
           oneChildSpect={onlyChildSpects}
           spectatorCount={spectatorCount}

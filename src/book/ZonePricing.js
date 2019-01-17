@@ -7,7 +7,7 @@ const ZonePricing = (props) => {
         <div className="col-8 offset-1">
           <div className="alert alert-primary" role="alert">
             <div className="row">
-              <div className="col-6">
+              <div className="col-9">
                   Zone Prices
               </div>
 

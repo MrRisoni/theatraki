@@ -9,10 +9,10 @@ const SpectatorList = props => (
         <div className="alert alert-primary" role="alert" id="spectatorAlert">
           <div className="row">
             <div className="col-5">
-              <button type="button" className="btn btn-danger">Clear Spectators</button>
+              <button type="button" className="btn btn-danger" onClick={props.clearSpectators}>Clear Spectators</button>
             </div>
             <div className="col-4">
-              <button type="button" className="btn btn-warning">Reset Seats</button>
+              <button type="button" className="btn btn-warning" onClick={props.resetSeats}>Reset Seats</button>
             </div>
 
             <div className="col-2">
