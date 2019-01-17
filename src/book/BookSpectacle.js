@@ -172,29 +172,26 @@ class BookSpectacle extends Component {
   componentDidMount() {
     const self = this;
     console.log(process.ENV);
-    axios.all([
-      axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seatkeys`),
-      axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/performance`),
-      axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seats`),
-    ]).then(axios.spread((seatMap, perform, taken) => {
+    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seats`)
+      .then((responseObj) => {
 
-      self.setState({
-        mapping: seatMap.data,
-        fetched: true,
-        performanceDetails: perform.data,
-        zones: perform.data.pricesList,
-        takenSeats: taken.data,
+          const responseData = responseObj.data;
+
+        self.setState({
+          mapping: responseData.seatmap,
+          fetched: true,
+          performanceDetails: responseData.performance,
+          zones: responseData.performance.pricesList,
+          takenSeats: responseData.taken,
+        });
+
+      }).catch((err) => {
+
+        self.setState({
+            errorMsg: err.message,
+        });
+
       });
-
-    })).catch(err => {
-      console.log(err);
-
-      self.setState({
-        errorMsg: err,
-      });
-
-    });
-
   }
 
   render() {
@@ -211,8 +208,14 @@ class BookSpectacle extends Component {
 
       <main>
 
-        <section id="zonePrices">
-            {this.state.errorMsg}
+          {this.state.errorMsg !== '' &&
+              <div className="alert alert-danger" role="alert">
+                  {this.state.errorMsg} Please refresh
+              </div>
+          }
+
+
+          <section id="zonePrices">
 
           {this.state.fetched
                       && <ZonePricing zones={this.state.performanceDetails.pricesList} />
