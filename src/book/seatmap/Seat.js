@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './seat.css';
+import SeatRows from "./SeatRows";
 
 class Seat extends Component {
   constructor(props) {
@@ -21,25 +22,36 @@ class Seat extends Component {
     let disabledButton = false;
 
 
-    if (this.props.seatName == '') {
+    if (this.props.seatName === '') {
       cssColor = '#ffff';
       className = '';
       disabledButton = true;
     } else {
-      cssColor = `#${this.props.css}`;
 
-      if (this.props.takenSeats.indexOf(this.props.seatName) > -1) {
-        disabledButton = true;
-        className = ' seatNotAvailable ';
-        cssColor = '#888888';
-      }
-      if (this.props.selectedSeats.indexOf(this.props.seatName) > -1) {
-        cssColor = 'yellow';
-        className = ' seatChosen ';
-      }
+        //check if this seat is supported by the current selected spectator type
+        const priceExists = this.props.pricing.filter(pr =>  pr.typ.title === this.props.selectedSpecType && pr.zone.id === this.props.zoneId).length >0;
+        if (priceExists === true) {
+
+            cssColor = `#${this.props.css}`;
+
+            if (this.props.takenSeats.indexOf(this.props.seatName) > -1) {
+                disabledButton = true;
+                className = ' seatNotAvailable ';
+                cssColor = '#888888';
+            }
+            if (this.props.selectedSeats.indexOf(this.props.seatName) > -1) {
+                cssColor = 'yellow';
+                className = ' seatChosen ';
+            }
+        }
+        else {
+            console.log('not supported ');
+            cssColor = '';
+            disabledButton = true;
+            className = ' seatNotSupported ';
+        }
 
 
-      // or selected by existing booking
     }
 
     return { cssColor, disabledButton, className };

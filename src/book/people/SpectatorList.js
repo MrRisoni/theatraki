@@ -37,7 +37,9 @@ const SpectatorList = props => (
       <div className="row">
         <div className="col-8 offset-1">
           {props.spectatorsList.filter(sp => sp.active).map(sp => (<Spectator key={sp.id}
+                                                                              changeSpectType={props.changeSpectType}
                                                                               removeSpect={props.removeSpect}
+                                                                              oneChildSpect={props.oneChildSpect}
                                                                               pickSeat={props.pickSeat} specData={sp} />))}
         </div>
       </div>

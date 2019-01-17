@@ -7,6 +7,7 @@ class Spectator extends Component {
 
     this.pickSeat = this.pickSeat.bind(this);
     this.removeSpect = this.removeSpect.bind(this);
+    this.changeType = this.changeType.bind(this);
   }
 
   removeSpect() {
@@ -14,6 +15,10 @@ class Spectator extends Component {
     this.props.removeSpect(this.props.specData.id);
   }
 
+  changeType(ev) {
+    console.log(ev.target.value);
+    this.props.changeSpectType(ev.target.value, this.props.specData.id);
+  }
 
   pickSeat() {
     this.props.pickSeat(this.props.specData.id);
@@ -31,6 +36,7 @@ class Spectator extends Component {
             <div className="row">
               <div className="col-5">
 
+
                                 Spectator #
                 {this.props.specData.humanId}
 
@@ -39,7 +45,9 @@ class Spectator extends Component {
               <div className="col-2"><i className="fas fa-eye" /></div>
 
               <div className="col-4">
-                <button className="btn btn-primary btn-warning" onClick={this.pickSeat}>Pick Seat</button>
+                <button className="btn btn-primary btn-warning" onClick={this.pickSeat}>
+Pick Seat
+                </button>
               </div>
 
             </div>
@@ -51,7 +59,8 @@ class Spectator extends Component {
             <div className="row">
               <div className="col-4">
 
-                                Seat
+                  Seat
+                  {' '}
                 {this.props.specData.seat}
               </div>
 
@@ -61,13 +70,15 @@ class Spectator extends Component {
               </div>
               <div className="col-3">
                 <div className="form-group">
-                  <select className="form-control" id="exampleFormControlSelect1">
+                  <select
+                    className="form-control"
+id="exampleFormControlSelect1"
+                    onChange={this.changeType}
+                  >
                     <option value="ADT">Adult</option>
                     <option value="CHD">Child</option>
                     <option value="ELD">Elder</option>
-                    <option value="STD">
-Student
-                    </option>
+                    <option value="STD">Student</option>
                   </select>
                 </div>
               </div>
@@ -75,10 +86,11 @@ Student
               <div className="col-4">
 
                                 Seat Cost
-                  {' '}
+                {' '}
                 {this.props.specData.price}
                 {' '}
-&euro;
+
+                                &euro;
               </div>
 
 
@@ -86,11 +98,31 @@ Student
           </div>
 
           <div className="card-footer">
+
+              {this.props.specData.type !== 'ADT' &&
+                <div className="row">
+                      <div className="col-10 offset-1">
+                          <div className="alert alert-warning" role="alert">
+                              Seats marked with red are not available for this type
+                          </div>
+                      </div>
+                  </div>
+              }
+
+              {this.props.oneChildSpect===true &&
+              <div className="row">
+                  <div className="col-10 offset-1">
+                      <div className="alert alert-warning" role="alert">
+                          You must have at least one adult
+                      </div>
+                  </div>
+              </div>
+              }
+
             <div className="row">
               <div className="col-5 offset-4">
                 <button className="btn btn-danger" onClick={this.removeSpect}>
-
-                                   Remove Spectator
+                    Remove Spectator
                 </button>
               </div>
             </div>
@@ -105,3 +137,4 @@ Student
 }
 
 export default Spectator;
+

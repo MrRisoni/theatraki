@@ -6,7 +6,6 @@ import Contact from './people/Contact';
 import Payment from './people/Payment';
 import PriceBox from './PriceBox';
 import ZonePricing from './ZonePricing';
-import Spectator from "./people/Spectator";
 
 class BookSpectacle extends Component {
   constructor(props) {
@@ -14,8 +13,7 @@ class BookSpectacle extends Component {
     this.state = {
       mapping: [],
       fetched: false,
-      zones: [],
-      zonesFetched: false,
+      zones:[],
       performanceDetails: {},
       takenSeats: [],
       spectatorsList: [
@@ -37,47 +35,61 @@ class BookSpectacle extends Component {
     this.updateSeat = this.updateSeat.bind(this);
     this.pickSeat = this.pickSeat.bind(this);
     this.removeSpect = this.removeSpect.bind(this);
-
+    this.changeSpectType = this.changeSpectType.bind(this);
   }
 
-    removeSpect(spectId)
-    {
-        let spectList = this.state.spectatorsList;
-        spectList.forEach(sp => {
-            sp.selectedForSeat = false;
-            if (sp.id == spectId) {
-                sp.active = false
+  removeSpect(spectId) {
+    const spectList = this.state.spectatorsList;
+    spectList.forEach((sp) => {
+      sp.selectedForSeat = false;
+      if (sp.id == spectId) {
+        sp.active = false;
+      }
+    });
 
-            }
-        })
+    this.setState({
+      spectatorsList: spectList,
+    });
+  }
 
-        this.setState({
-            spectatorsList: spectList,
-        });
-    }
+  pickSeat(spectId) {
+    const spectList = this.state.spectatorsList;
+    spectList.forEach((sp) => {
+      sp.selectedForSeat = false;
+      if (sp.id == spectId) {
+        sp.selectedForSeat = true;
+      }
+    });
 
-  pickSeat(spectId)
-  {
-    console.log('pcik eat ofr ' + spectId);
-      let spectList = this.state.spectatorsList;
-      spectList.forEach(sp => {
-          sp.selectedForSeat = false;
+    this.setState({
+      spectatorsList: spectList,
+    });
+  }
+
+
+  changeSpectType(newType, spectId) {
+      // if child and one pax issue alert and dont change
+      // if seat selected check if supported by this type if not alert
+      // show seats that are supported by this type
+
+
+      const spectList = this.state.spectatorsList;
+      spectList.forEach((sp) => {
           if (sp.id == spectId) {
-              sp.selectedForSeat = true;
-
+              sp.type = newType;
           }
-      })
+      });
 
+      console.log('changed type ');
+      console.log(spectList);
       this.setState({
           spectatorsList: spectList,
       });
-
   }
 
 
   updateSeat(seatName, zoneId) {
-
-    console.log('update eat ' + '  ' + seatName + ' ' + zoneId);
+    console.log(`${'update eat ' + '  '}${seatName} ${zoneId}`);
     const spectList = this.state.spectatorsList;
     const spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
     spect.seat = seatName;
@@ -109,7 +121,7 @@ class BookSpectacle extends Component {
       type: 'ADT',
       seat: '',
       tktNo: '',
-      zoneId:0,
+      zoneId: 0,
       price: 0,
       selectedForSeat: false,
     });
@@ -144,6 +156,8 @@ class BookSpectacle extends Component {
     console.log(process.env);
 
     const selectedSeats = this.state.spectatorsList.filter(spl => spl.active === true).map(actSpl => actSpl.seat);
+    const selectedSpectType = this.state.spectatorsList.filter(spl => (spl.active === true && spl.selectedForSeat === true))[0].type;
+    const oneChildSpect =  (this.state.spectatorsList.filter(spl => (spl.active === true && spl.type === 'CHD')).length ==1);
 
 
     return (
@@ -156,6 +170,8 @@ class BookSpectacle extends Component {
                   spectatorsList={this.state.spectatorsList}
                   mapping={this.state.mapping}
                   selectedSeats={selectedSeats}
+                  selectedSpecType={selectedSpectType}
+                  pricing={this.state.performanceDetails.pricesList}
                   takenSeats={this.state.takenSeats}
                   updateSeat={this.updateSeat}
                 />
@@ -167,10 +183,14 @@ class BookSpectacle extends Component {
                 }
 
 
-        <SpectatorList spectatorsList={this.state.spectatorsList}
-                       removeSpect={this.removeSpect}
-                       pickSeat={this.pickSeat}/>
-
+warning for child
+        <SpectatorList
+          spectatorsList={this.state.spectatorsList}
+          oneChildSpect={oneChildSpect}
+          removeSpect={this.removeSpect}
+          changeSpectType={this.changeSpectType}
+          pickSeat={this.pickSeat}
+        />
 
 
         <div className="row">
@@ -184,7 +204,9 @@ class BookSpectacle extends Component {
 
         <Contact />
 
-        <Payment />
+          {oneChildSpect === false &&
+            <Payment/>
+          }
 
         <PriceBox spectatorsList={this.state.spectatorsList} />
 

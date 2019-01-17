@@ -9,6 +9,10 @@
 
 }
 
+.seatNotSupported {
+    background-color: red;
+    pointer-events: none;
+}
 
 .seatFree {
     cursor:pointer;

@@ -23,7 +23,9 @@ class SeatMap extends Component {
               spectatorsList={this.props.spectatorsList}
               updateSeat={this.props.updateSeat}
               takenSeats={this.props.takenSeats}
-              mapping={this.props.mapping}
+                selectedSpecType={this.props.selectedSpecType}
+                pricing={this.props.pricing}
+                mapping={this.props.mapping}
               rowId={idx}
             />
 

@@ -38,7 +38,8 @@ const SeatRows = (props) => {
                   seatName={seatName}
                   zoneId={zoneId}
                   css={css}
-                  spectatorsList={props.spectatorsList}
+                  pricing={props.pricing}
+                  selectedSpecType={props.selectedSpecType}
                   selectedSeats={props.selectedSeats}
                   updateSeat={props.updateSeat}
                   takenSeats={props.takenSeats}

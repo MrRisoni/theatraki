@@ -12,9 +12,5 @@ Spring Hibernate
 
 
 TODO 
-
-http://localhost:8080/api/seatkeys api
-
 More Theaters
-
 Browse spectacles
