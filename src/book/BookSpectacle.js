@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router-dom";
+
 import axios from 'axios';
 import SeatMap from './seatmap/SeatMap';
 import SpectatorList from './people/SpectatorList';
@@ -11,11 +13,12 @@ import {
   get_selectedSpectType,
   get_selectedSeats,
   get_spectatorCount,
-    allPaxesHaveSeats,
+  allPaxesHaveSeats,
 } from './helpers';
 
 import './styles/bookspectacle.css';
-import Error from "../common/Error";
+import Error from '../common/Error';
+import CogWheel from '../common/CogWheel';
 
 class BookSpectacle extends Component {
   constructor(props) {
@@ -27,6 +30,7 @@ class BookSpectacle extends Component {
       performanceDetails: {},
       takenSeats: [],
       errorMsg: '',
+      showPayCogWheel: false,
       spectatorsList: [
         {
           id: 0,
@@ -52,11 +56,37 @@ class BookSpectacle extends Component {
     this.pay = this.pay.bind(this);
   }
 
-    pay(){
-        // validations
-            console.log('Pay !!');
+  pay() {
+    // validations
+    console.log('Pay !!');
+    const self  = this;
+    this.setState({
+      showPayCogWheel: true,
+    });
 
-    }
+
+      axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/book`,  {
+          params: this.state})
+          .then((responseObj) => {
+              const responseData = responseObj.data;
+
+              this.props.history.push('/finished');
+
+
+          }).catch((err) => {
+
+          self.setState({
+              errorMsg: err.message,
+              showPayCogWheel: false,
+          });
+
+          this.props.history.push('/finished');
+
+
+      });
+
+
+  }
 
 
   clearSpectators() {
@@ -225,9 +255,10 @@ class BookSpectacle extends Component {
 
         {this.state.errorMsg !== ''
               && (
-                <Error message= {this.state.errorMsg}/>
-            )
+                <Error message={this.state.errorMsg} />
+              )
           }
+
 
 
         <section id="zonePrices">
@@ -286,11 +317,15 @@ class BookSpectacle extends Component {
                       && <Payment pay={this.pay} />
                       }
 
-            {allPaxesHaveSeats(this.state.spectatorsList) === false &&
-                <Error message="Not all spectators have seats"/>
+          {allPaxesHaveSeats(this.state.spectatorsList) === false
+                && <Error message="Not all spectators have seats" />
             }
 
-            <PriceBox spectatorsList={this.state.spectatorsList} />
+          <PriceBox spectatorsList={this.state.spectatorsList} />
+
+            {this.state.showPayCogWheel &&
+            <CogWheel/>
+            }
 
 
         </section>
