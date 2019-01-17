@@ -16,8 +16,6 @@
 
 .seatChosen {
     pointer-events: none;
-    border: solid black 1px;
-    color:yellow;
 }
 
 .seatNotAvailable {
