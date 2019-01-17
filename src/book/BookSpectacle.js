@@ -6,6 +6,7 @@ import Contact from './people/Contact';
 import Payment from './people/Payment';
 import PriceBox from './PriceBox';
 import ZonePricing from './ZonePricing';
+import Spectator from "./people/Spectator";
 
 class BookSpectacle extends Component {
   constructor(props) {
@@ -34,8 +35,25 @@ class BookSpectacle extends Component {
     this.addSpectator = this.addSpectator.bind(this);
     this.updateSeat = this.updateSeat.bind(this);
     this.pickSeat = this.pickSeat.bind(this);
+    this.removeSpect = this.removeSpect.bind(this);
 
   }
+
+    removeSpect(spectId)
+    {
+        let spectList = this.state.spectatorsList;
+        spectList.forEach(sp => {
+            sp.selectedForSeat = false;
+            if (sp.id == spectId) {
+                sp.active = false
+
+            }
+        })
+
+        this.setState({
+            spectatorsList: spectList,
+        });
+    }
 
   pickSeat(spectId)
   {
@@ -146,6 +164,7 @@ class BookSpectacle extends Component {
 
 
         <SpectatorList spectatorsList={this.state.spectatorsList}
+                       removeSpect={this.removeSpect}
                        pickSeat={this.pickSeat}/>
 
 

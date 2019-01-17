@@ -6,8 +6,16 @@ class Spectator extends Component {
         super(props);
 
         this.pickSeat = this.pickSeat.bind(this);
+        this.removeSpect = this.removeSpect.bind(this);
 
    }
+
+    removeSpect(){
+        console.log('removing ' + this.props.specData.id);
+        this.props.removeSpect(this.props.specData.id);
+
+    }
+
 
    pickSeat()
    {
@@ -74,7 +82,7 @@ class Spectator extends Component {
                     <div className="card-footer">
                         <div className="row">
                             <div className="col-5 offset-4">
-                                <button  className="btn btn-danger">
+                                <button  className="btn btn-danger" onClick={this.removeSpect}>
                                    Remove Spectator</button>
                             </div>
                         </div>
