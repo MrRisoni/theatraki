@@ -21,26 +21,23 @@ class Seat extends Component {
     let className = ' seatFree ';
     let disabledButton = false;
 
-
     const filters = this.props.filters;
-    console.log('this.props.selectedSeats');
 
-    console.log(this.props.spectatorsList);
 
     if (filters.length === 0) {
       cssColor = '#ffff';
       className = '';
       disabledButton = true;
-      // console.log('not exists');
     } else {
       cssColor = `#${filters[0].zoneInfo.css}`;
 
-      if (this.props.takenSeats.indexOf(filters[0].seatName) > -1) {
+      if (this.props.takenSeats.indexOf(this.props.seatName) > -1) {
         disabledButton = true;
         className = ' seatNotAvailable ';
         cssColor = '#888888';
       }
-      if (this.props.selectedSeats.indexOf(filters[0].seatName) > -1) {
+      if (this.props.selectedSeats.indexOf(this.props.seatName) > -1) {
+          cssColor = 'yellow';
         className = ' seatChosen ';
       }
 

@@ -106,8 +106,6 @@ class BookSpectacle extends Component {
 
     const selectedSeats = this.state.spectatorsList.filter(spl => spl.active === true).map(actSpl => actSpl.seat);
 
-      console.log('selectedSeats');
-      console.log(selectedSeats);
 
 
       return (
