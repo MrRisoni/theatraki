@@ -24,6 +24,7 @@ class BookSpectacle extends Component {
       zones: [],
       performanceDetails: {},
       takenSeats: [],
+      errorMsg: '',
       spectatorsList: [
         {
           id: 0,
@@ -176,6 +177,7 @@ class BookSpectacle extends Component {
       axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/performance`),
       axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seats`),
     ]).then(axios.spread((seatMap, perform, taken) => {
+
       self.setState({
         mapping: seatMap.data,
         fetched: true,
@@ -183,9 +185,16 @@ class BookSpectacle extends Component {
         zones: perform.data.pricesList,
         takenSeats: taken.data,
       });
-    })).catch((err) => {
+
+    })).catch(err => {
       console.log(err);
+
+      self.setState({
+        errorMsg: err,
+      });
+
     });
+
   }
 
   render() {
@@ -197,67 +206,73 @@ class BookSpectacle extends Component {
     const onlyChildSpects = get_onlyChildSpects(this.state.spectatorsList);
     const spectatorCount = get_spectatorCount(this.state.spectatorsList);
 
+
     return (
 
-        <main>
-            <section id="zonePrices">
+      <main>
 
-            {this.state.fetched
-            && <ZonePricing zones={this.state.performanceDetails.pricesList} />
-            }
+        <section id="zonePrices">
+            {this.state.errorMsg}
+
+          {this.state.fetched
+                      && <ZonePricing zones={this.state.performanceDetails.pricesList} />
+                      }
         </section>
 
-            <section>
+        <section>
 
 
-        {this.state.fetched
-                && (
-                <SeatMap
-                  spectatorsList={this.state.spectatorsList}
-                  mapping={this.state.mapping}
-                  selectedSeats={selectedSeats}
-                  selectedSpecType={selectedSpectType}
-                  pricing={this.state.performanceDetails.pricesList}
-                  takenSeats={this.state.takenSeats}
-                  updateSeat={this.updateSeat}
-                />
-                )
-                 }
+          {this.state.fetched
+                      && (
+                      <SeatMap
+                        spectatorsList={this.state.spectatorsList}
+                        mapping={this.state.mapping}
+                        selectedSeats={selectedSeats}
+                        selectedSpecType={selectedSpectType}
+                        pricing={this.state.performanceDetails.pricesList}
+                        takenSeats={this.state.takenSeats}
+                        updateSeat={this.updateSeat}
+                      />
+                      )
+                      }
 
 
+          <SpectatorList
+            resetSeats={this.resetSeats}
+            clearSpectators={this.clearSpectators}
+            spectatorsList={this.state.spectatorsList}
+            oneChildSpect={onlyChildSpects}
+            spectatorCount={spectatorCount}
+            removeSpect={this.removeSpect}
+            changeSpectType={this.changeSpectType}
+            pickSeat={this.pickSeat}
+          />
 
-        <SpectatorList
-          resetSeats={this.resetSeats}
-          clearSpectators={this.clearSpectators}
-          spectatorsList={this.state.spectatorsList}
-          oneChildSpect={onlyChildSpects}
-          spectatorCount={spectatorCount}
-          removeSpect={this.removeSpect}
-          changeSpectType={this.changeSpectType}
-          pickSeat={this.pickSeat}
-        />
 
-
-        <div className="row">
-          <div className="col-4 offset-4">
-            <button className="btn btn-primary btn-success" id="addSpectButt" onClick={this.addSpectator}>
-              <span>Add Spectator</span>
-            </button>
+          <div className="row">
+            <div className="col-4 offset-4">
+              <button
+                className="btn btn-primary btn-success"
+                id="addSpectButt"
+                onClick={this.addSpectator}
+              >
+                <span>Add Spectator</span>
+              </button>
+            </div>
           </div>
-        </div>
 
 
-        <Contact />
+          <Contact />
 
-        {onlyChildSpects === false
-            && <Payment />
-          }
+          {onlyChildSpects === false
+                      && <Payment />
+                      }
 
-        <PriceBox spectatorsList={this.state.spectatorsList} />
+          <PriceBox spectatorsList={this.state.spectatorsList} />
 
 
-      </section>
-        </main>
+        </section>
+      </main>
 
     );
   }
