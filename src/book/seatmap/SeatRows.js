@@ -5,9 +5,9 @@ import Seat from './Seat';
 const SeatRows = (props) => {
   const colsArray = lodash.range(1, 65);
   let keyId = '';
-  let filteredData = '';
   let seatName = '';
   let zoneId = 0;
+  let css = '';
 
   return (
     <div className="row">
@@ -16,12 +16,20 @@ const SeatRows = (props) => {
           <div className="col-12">
 
             {colsArray.map((col) => {
+              seatName = '';
+              zoneId = 0;
+              css = '';
               keyId = `keySeat${props.rowId}_${col}`;
-              filteredData = props.mapping.filter(stmp => ((stmp.rowId === props.rowId) && (stmp.colId === col)));
-              if (filteredData.length > 0) {
-                seatName = filteredData[0].seatName;
-                zoneId = filteredData[0].zoneInfo.id;
+              if (typeof props.mapping[props.rowId] !== 'undefined') {
+                if (typeof props.mapping[props.rowId][col] !== 'undefined') {
+                  const seatData = props.mapping[props.rowId][col];
+                  seatName = seatData.seatName;
+                  zoneId = seatData.zoneId;
+                  css = seatData.zoneCss;
+                }
               }
+
+
               return (
                 <Seat
                   key={keyId}
@@ -29,12 +37,11 @@ const SeatRows = (props) => {
                   colId={col}
                   seatName={seatName}
                   zoneId={zoneId}
-                  filters={filteredData}
+                  css={css}
                   spectatorsList={props.spectatorsList}
                   selectedSeats={props.selectedSeats}
                   updateSeat={props.updateSeat}
                   takenSeats={props.takenSeats}
-                  mapping={props.mapping}
                 />
               );
             })}

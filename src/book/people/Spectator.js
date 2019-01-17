@@ -75,6 +75,7 @@ Student
               <div className="col-4">
 
                                 Seat Cost
+                  {' '}
                 {this.props.specData.price}
                 {' '}
 &euro;

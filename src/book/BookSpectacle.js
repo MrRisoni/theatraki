@@ -25,6 +25,7 @@ class BookSpectacle extends Component {
           type: 'ADT',
           seat: '',
           tktNo: '',
+          zoneId: 0,
           active: true,
           price: 0,
           selectedForSeat: true,
@@ -73,20 +74,22 @@ class BookSpectacle extends Component {
 
   }
 
-  updateSeat(rowId, colId, zoneId) {
-    const seatName = this.state.mapping.filter(stmp => ((stmp.rowId === rowId) && (stmp.colId === colId)))[0].seatName;
-    console.log(`picked ${seatName}`);
-    let spectList = this.state.spectatorsList;
-      let spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
-    spect.seat = seatName;
-    console.log(this.state.zones);
-    spect.price = this.state.zones.filter(zn => ((zn.id == zoneId) && (zn.typ.title == spect.type)))[0].price;
 
+  updateSeat(seatName, zoneId) {
+
+    console.log('update eat ' + '  ' + seatName + ' ' + zoneId);
+    const spectList = this.state.spectatorsList;
+    const spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
+    spect.seat = seatName;
+    spect.zoneId = zoneId;
+    console.log(this.state.performanceDetails.pricesList);
+    spect.price = this.state.performanceDetails.pricesList.filter(zn => ((zn.zone.id == zoneId) && (zn.typ.title == spect.type)))[0].price;
 
     this.setState({
       spectatorsList: spectList,
     });
   }
+
 
   addSpectator() {
     let lastActiveHumanId = 0;
@@ -106,6 +109,7 @@ class BookSpectacle extends Component {
       type: 'ADT',
       seat: '',
       tktNo: '',
+      zoneId:0,
       price: 0,
       selectedForSeat: false,
     });
@@ -119,7 +123,7 @@ class BookSpectacle extends Component {
     const self = this;
     console.log(process.ENV);
     axios.all([
-      axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seatmap`),
+      axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seatkeys`),
       axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/performance`),
       axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seats`),
     ]).then(axios.spread((seatMap, perform, taken) => {
@@ -166,6 +170,7 @@ class BookSpectacle extends Component {
         <SpectatorList spectatorsList={this.state.spectatorsList}
                        removeSpect={this.removeSpect}
                        pickSeat={this.pickSeat}/>
+
 
 
         <div className="row">
