@@ -44,6 +44,7 @@ class BookSpectacle extends Component {
       let spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
       spect.seat = seatName;
 
+
       this.setState({
           spectatorsList : spectList,
       })
@@ -77,8 +78,6 @@ class BookSpectacle extends Component {
       spectatorsList: spectatesList,
     });
   }
-
-
 
   componentDidMount() {
     const self = this;
@@ -116,8 +115,8 @@ class BookSpectacle extends Component {
 
 
         {this.state.fetched
-                && <SeatMap mapping={this.state.mapping}
-                            spectatorsList={this.state.spectatorsList}
+                && <SeatMap spectatorsList={this.state.spectatorsList}
+                             mapping={this.state.mapping}
                             selectedSeats={selectedSeats}
                             takenSeats={this.state.takenSeats}
                             updateSeat={this.updateSeat}/>
