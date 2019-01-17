@@ -41,34 +41,35 @@ const ZonePricing = (props) => {
               </tr>
             </thead>
             <tbody>
-              {props.zones.map(zonep => (
-                <tr>
-                  <td>{zonep.zone.title}</td>
-                  <td style={{ color: zonep.zone.css }}>
-                    {zonep.zone.css}
-                    {' '}
-                  </td>
-                  <td>
+              {props.zones.map(zonep => {
+                  let key= 'zpkey_' + zonep.zone.id + '_' + zonep.typ.title;
+                  return (
+                      <tr key={zonep.zone.id}>
+                          <td>{zonep.zone.title}</td>
+                          <td style={{color: zonep.zone.css}}>
+                              {zonep.zone.css}
+                              {' '}
+                          </td>
+                          <td>
 
 
-                    {zonep.typ.title === 'ADT'
-                                    && <p>Adult</p>
-                                    }
-                    {zonep.typ.title === 'CHD'
-                                    && <p>Child</p>
-                                    }
-                    {zonep.typ.title === 'ELD'
-                                    && <p>Elder</p>
-                                    }
-                    {zonep.typ.title === 'STD'
-                                    && <p>Student</p>
-                                    }
-                  </td>
+                              {zonep.typ.title === 'ADT'
+                              && <p>Adult</p>
+                              }
+                              {zonep.typ.title === 'CHD'
+                              && <p>Child</p>
+                              }
+                              {zonep.typ.title === 'ELD'
+                              && <p>Elder</p>
+                              }
+                              {zonep.typ.title === 'STD'
+                              && <p>Student</p>
+                              }
+                          </td>
 
-                  <td>{zonep.price.toFixed(2)}</td>
-                </tr>
-              ))}
-
+                          <td>{zonep.price.toFixed(2)}</td>
+                      </tr>);
+                  })}
 
             </tbody>
           </table>

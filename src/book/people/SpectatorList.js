@@ -36,7 +36,7 @@ const SpectatorList = props => (
     <section className="show" id="spectatorsCollapse">
       <div className="row">
         <div className="col-8 offset-1">
-          {props.spectatorsList.filter(sp => sp.active).map(sp => (<Spectator specData={sp} />))}
+          {props.spectatorsList.filter(sp => sp.active).map(sp => (<Spectator key={sp.id} specData={sp} />))}
 specData
 
         </div>

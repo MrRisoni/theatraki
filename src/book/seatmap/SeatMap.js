@@ -16,8 +16,9 @@ class SeatMap extends Component {
       <section>
 
         {rows.map(idx => (
-          <div className="row">
+
             <SeatRows
+                key={`keySeatRpw${idx}`}
               selectedSeats={this.props.selectedSeats}
               spectatorsList={this.props.spectatorsList}
               updateSeat={this.props.updateSeat}
@@ -25,15 +26,13 @@ class SeatMap extends Component {
               mapping={this.props.mapping}
               rowId={idx}
             />
-          </div>
+
         ))}
 
 
         <div className="row stageDiv">
           <div className="col-6 offset-2">
             <div className="alert alert-dark" role="alert">
-
-
                     Stage
             </div>
           </div>
