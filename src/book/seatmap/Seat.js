@@ -10,9 +10,7 @@ class Seat extends Component {
   }
 
   clickSeat() {
-    this.props.updateSeat(this.props.rowId, this.props.colId);
-
-
+    this.props.updateSeat(this.props.seatName, this.props.zoneId);
   }
 
 
@@ -21,15 +19,15 @@ class Seat extends Component {
     let className = ' seatFree ';
     let disabledButton = false;
 
-    const filters = this.props.filters;
 
-
-    if (filters.length === 0) {
-      cssColor = '#ffff';
-      className = '';
-      disabledButton = true;
+    if (this.props.seatName == '') {
+      ///  console.log('fooo ' );
+       // console.log(this.props);
+          cssColor = '#ffff';
+          className = '';
+          disabledButton = true;
     } else {
-      cssColor = `#${filters[0].zoneInfo.css}`;
+      cssColor = `#${this.props.css}`;
 
       if (this.props.takenSeats.indexOf(this.props.seatName) > -1) {
         disabledButton = true;

@@ -24,6 +24,7 @@ class BookSpectacle extends Component {
           type: 'ADT',
           seat: '',
           tktNo: '',
+          zoneId: 0,
           active: true,
           price: 0,
           selectedForSeat: true,
@@ -36,20 +37,17 @@ class BookSpectacle extends Component {
   }
 
 
-  updateSeat(rowId,colId)
-  {
-      const seatName = this.state.mapping.filter(stmp => ((stmp.rowId === rowId) && (stmp.colId === colId)))[0].seatName;
-      console.log('picked ' + seatName);
-      let spectList = this.state.spectatorsList;
-      let spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
-      spect.seat = seatName;
+  updateSeat(seatName, zoneId) {
 
+    console.log(`picked ${seatName}`);
+    const spectList = this.state.spectatorsList;
+    const spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
+    spect.seat = seatName;
+    spect.zoneId = zoneId;
 
-      this.setState({
-          spectatorsList : spectList,
-      })
-
-
+    this.setState({
+      spectatorsList: spectList,
+    });
   }
 
   addSpectator() {
@@ -70,6 +68,7 @@ class BookSpectacle extends Component {
       type: 'ADT',
       seat: '',
       tktNo: '',
+      zoneId:0,
       price: 0,
       selectedForSeat: false,
     });
@@ -83,7 +82,7 @@ class BookSpectacle extends Component {
     const self = this;
     console.log(process.ENV);
     axios.all([
-      axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seatmap`),
+      axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seatkeys`),
       axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/performance`),
       axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seats`),
     ]).then(axios.spread((seatMap, perform, taken) => {
@@ -105,23 +104,25 @@ class BookSpectacle extends Component {
     const selectedSeats = this.state.spectatorsList.filter(spl => spl.active === true).map(actSpl => actSpl.seat);
 
 
-
-      return (
+    return (
       <section>
 
 
         {this.state.fetched
-                && <SeatMap spectatorsList={this.state.spectatorsList}
-                             mapping={this.state.mapping}
-                            selectedSeats={selectedSeats}
-                            takenSeats={this.state.takenSeats}
-                            updateSeat={this.updateSeat}/>
+                && (
+                <SeatMap
+                  spectatorsList={this.state.spectatorsList}
+                  mapping={this.state.mapping}
+                  selectedSeats={selectedSeats}
+                  takenSeats={this.state.takenSeats}
+                  updateSeat={this.updateSeat}
+                />
+                )
                  }
 
         {this.state.fetched
                     && <ZonePricing zones={this.state.performanceDetails.pricesList} />
                 }
-
 
 
         <SpectatorList spectatorsList={this.state.spectatorsList} />
