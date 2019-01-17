@@ -11,9 +11,11 @@ import {
   get_selectedSpectType,
   get_selectedSeats,
   get_spectatorCount,
+    allPaxesHaveSeats,
 } from './helpers';
 
 import './styles/bookspectacle.css';
+import Error from "../common/Error";
 
 class BookSpectacle extends Component {
   constructor(props) {
@@ -47,7 +49,15 @@ class BookSpectacle extends Component {
     this.changeSpectType = this.changeSpectType.bind(this);
     this.clearSpectators = this.clearSpectators.bind(this);
     this.resetSeats = this.resetSeats.bind(this);
+    this.pay = this.pay.bind(this);
   }
+
+    pay(){
+        // validations
+            console.log('Pay !!');
+
+    }
+
 
   clearSpectators() {
     this.setState({
@@ -86,6 +96,15 @@ class BookSpectacle extends Component {
       sp.selectedForSeat = false;
       if (sp.id === spectId) {
         sp.active = false;
+      }
+    });
+
+    let assignedSelection = false;
+    spectList.forEach((sp) => {
+      sp.selectedForSeat = false;
+      if (sp.active && assignedSelection === false) {
+        sp.selectedForSeat = true;
+        assignedSelection = true;
       }
     });
 
@@ -172,10 +191,9 @@ class BookSpectacle extends Component {
   componentDidMount() {
     const self = this;
     console.log(process.ENV);
-    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seats`)
+    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/prebook`)
       .then((responseObj) => {
-
-          const responseData = responseObj.data;
+        const responseData = responseObj.data;
 
         self.setState({
           mapping: responseData.seatmap,
@@ -184,13 +202,10 @@ class BookSpectacle extends Component {
           zones: responseData.performance.pricesList,
           takenSeats: responseData.taken,
         });
-
       }).catch((err) => {
-
         self.setState({
-            errorMsg: err.message,
+          errorMsg: err.message,
         });
-
       });
   }
 
@@ -208,14 +223,14 @@ class BookSpectacle extends Component {
 
       <main>
 
-          {this.state.errorMsg !== '' &&
-              <div className="alert alert-danger" role="alert">
-                  {this.state.errorMsg} Please refresh
-              </div>
+        {this.state.errorMsg !== ''
+              && (
+                <Error message= {this.state.errorMsg}/>
+            )
           }
 
 
-          <section id="zonePrices">
+        <section id="zonePrices">
 
           {this.state.fetched
                       && <ZonePricing zones={this.state.performanceDetails.pricesList} />
@@ -267,11 +282,15 @@ class BookSpectacle extends Component {
 
           <Contact />
 
-          {onlyChildSpects === false
-                      && <Payment />
+          {(onlyChildSpects === false && allPaxesHaveSeats(this.state.spectatorsList) === true)
+                      && <Payment pay={this.pay} />
                       }
 
-          <PriceBox spectatorsList={this.state.spectatorsList} />
+            {allPaxesHaveSeats(this.state.spectatorsList) === false &&
+                <Error message="Not all spectators have seats"/>
+            }
+
+            <PriceBox spectatorsList={this.state.spectatorsList} />
 
 
         </section>

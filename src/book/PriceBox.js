@@ -16,7 +16,6 @@ const PriceBox = (props) => {
           <div className="col-8 offset-1">
             <div className="card bg-info">
               <div className="card-header">
-                <b> PriceAnalysis </b>
               </div>
               <div className="card-body text-white" />
               <div className="card-footer">

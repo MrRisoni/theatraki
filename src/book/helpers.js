@@ -17,3 +17,7 @@ export function get_selectedSeats(spectatorsList) {
 export function get_spectatorCount(spectatorsList) {
   return spectatorsList.filter(spl => spl.active === true).length;
 }
+
+export function allPaxesHaveSeats(spectatorsList) {
+   return  (spectatorsList.filter(spl => (spl.active && spl.seat === '')).length === 0);
+}

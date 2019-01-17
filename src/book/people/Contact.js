@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import '../styles/contact.css';
 
 class Contact extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      surname: '',
+        name:'',
+        mobile:'',
+        email:'',
+    };
+  }
+
   render() {
     return (
       <section>
@@ -19,9 +29,11 @@ class Contact extends Component {
                     <button
                       className="btn btn-sm btn-dark btn-block btnToggle"
                       data-toggle="collapse"
-                      data-target="#ContactCollapse" aria-expanded="false"
+                      data-target="#ContactCollapse"
+                      aria-expanded="false"
                       aria-controls="collapseExample"
-                    >Toggle
+                    >
+Toggle
                     </button>
                   </div>
                 </div>
@@ -39,13 +51,17 @@ class Contact extends Component {
                   </div>
                   <div className="col-5">
                     <input
-                      type="text" placeholder="Surname" value=""
+                      type="text"
+                      placeholder="Surname"
+                      value=""
                       className="form-control"
                     />
                   </div>
                   <div className="col-5">
                     <input
-                      type="text" placeholder="Name" value=""
+                      type="text"
+                      placeholder="Name"
+                      value=""
                       className="form-control"
                     />
                   </div>
@@ -55,19 +71,22 @@ class Contact extends Component {
                 <div className="row contactRow">
                   <div className="col-2">
                     <input
-                      type="text" placeholder="Prefix"
+                      type="text"
+                      placeholder="Prefix"
                       className="form-control"
                     />
                   </div>
                   <div className="col-5">
                     <input
-                      type="text" placeholder="Mobile"
+                      type="text"
+                      placeholder="Mobile"
                       className="form-control"
                     />
                   </div>
                   <div className="col-5">
                     <input
-                      type="text" placeholder="Email"
+                      type="text"
+                      placeholder="Email"
                       className="form-control"
                     />
                   </div>
