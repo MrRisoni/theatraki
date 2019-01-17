@@ -198,7 +198,16 @@ class BookSpectacle extends Component {
     const spectatorCount = get_spectatorCount(this.state.spectatorsList);
 
     return (
-      <section>
+
+        <main>
+            <section id="zonePrices">
+
+            {this.state.fetched
+            && <ZonePricing zones={this.state.performanceDetails.pricesList} />
+            }
+        </section>
+
+            <section>
 
 
         {this.state.fetched
@@ -215,9 +224,6 @@ class BookSpectacle extends Component {
                 )
                  }
 
-        {this.state.fetched
-                    && <ZonePricing zones={this.state.performanceDetails.pricesList} />
-                }
 
 
         <SpectatorList
@@ -251,6 +257,7 @@ class BookSpectacle extends Component {
 
 
       </section>
+        </main>
 
     );
   }
