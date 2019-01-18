@@ -64,9 +64,20 @@ class BookSpectacle extends Component {
       showPayCogWheel: true,
     });
 
+      let ppl = [];
+      this.state.spectatorsList.filter(sp => sp.active).forEach(p => {
+        ppl.push( 
+              {
+                type: p.type, 
+                seat:p.set
+              }
+              );
+      });
+
+      console.log(ppl);
 
       axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/book`,  {
-          params: this.state})
+          postData: {people:ppl}})
           .then((responseObj) => {
               const responseData = responseObj.data;
 
