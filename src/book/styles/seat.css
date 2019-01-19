@@ -6,7 +6,6 @@
     border: 0;
     box-shadow: none;
     border-radius: 0;
-
 }
 
 .seatNotSupported {
@@ -26,3 +25,7 @@
     pointer-events: none;
 }
 
+
+.SeatRows {
+    margin-left: 22%;
+}

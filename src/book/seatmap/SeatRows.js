@@ -3,17 +3,14 @@ import lodash from 'lodash';
 import Seat from './Seat';
 
 const SeatRows = (props) => {
-  const colsArray = lodash.range(1, 55);
+  const colsArray = lodash.range(1, props.maxCols);
   let keyId = '';
   let seatName = '';
   let zoneId = 0;
   let css = '';
 
   return (
-    <div className="row">
       <div className="SeatRows">
-        <div className="row">
-          <div className="col-12">
 
             {colsArray.map((col) => {
               seatName = '';
@@ -46,10 +43,8 @@ const SeatRows = (props) => {
                 />
               );
             })}
-          </div>
 
-        </div>
-      </div>
+
     </div>
   );
 };
