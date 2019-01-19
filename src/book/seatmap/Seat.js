@@ -31,11 +31,14 @@ class Seat extends Component {
       if (priceExists === true) {
         cssColor = `#${this.props.css}`;
 
-        if (this.props.takenSeats.indexOf(this.props.seatName) > -1) {
-          disabledButton = true;
-          className = ' seatNotAvailable ';
-          cssColor = '#888888';
+        if (this.props.takenSeats) {
+            if (this.props.takenSeats.indexOf(this.props.seatName) > -1) {
+                disabledButton = true;
+                className = ' seatNotAvailable ';
+                cssColor = '#888888';
+            }
         }
+
         if (this.props.selectedSeats.indexOf(this.props.seatName) > -1) {
           cssColor = 'yellow';
           className = ' seatChosen ';

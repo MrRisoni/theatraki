@@ -10,7 +10,7 @@ class SeatMap extends Component {
   }
 
   render() {
-    const rows = lodash.range(1, 25);
+    const rows = lodash.range(1, this.props.maxRows);
 
     return (
       <section>

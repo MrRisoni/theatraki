@@ -27,6 +27,8 @@ class BookSpectacle extends Component {
       mapping: [],
       fetched: false,
       zones: [],
+      maxRows:0,
+      maxCols:0,
       performanceDetails: {},
       takenSeats: [],
       errorMsg: '',
@@ -66,9 +68,9 @@ class BookSpectacle extends Component {
 
       let ppl = [];
       this.state.spectatorsList.filter(sp => sp.active).forEach(p => {
-        ppl.push( 
+        ppl.push(
               {
-                type: p.type, 
+                type: p.type,
                 seat:p.set
               }
               );
@@ -237,6 +239,8 @@ class BookSpectacle extends Component {
         const responseData = responseObj.data;
 
         self.setState({
+          maxRows: responseData.maxRows,
+          maxCols: responseData.maxCols,
           mapping: responseData.seatmap,
           fetched: true,
           performanceDetails: responseData.performance,
@@ -285,6 +289,8 @@ class BookSpectacle extends Component {
           {this.state.fetched
                       && (
                       <SeatMap
+                        maxRows={this.state.maxRows}
+                        maxCols={this.state.maxCols}
                         spectatorsList={this.state.spectatorsList}
                         mapping={this.state.mapping}
                         selectedSeats={selectedSeats}
