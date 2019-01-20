@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 
 import axios from 'axios';
 import SeatMap from './seatmap/SeatMap';
@@ -14,6 +14,7 @@ import {
   get_selectedSeats,
   get_spectatorCount,
   allPaxesHaveSeats,
+  emptyContactVars,
 } from './helpers';
 
 import './styles/bookspectacle.css';
@@ -27,20 +28,26 @@ class BookSpectacle extends Component {
       mapping: [],
       fetched: false,
       zones: [],
-      maxRows:0,
-      maxCols:0,
+      maxRows: 0,
+      maxCols: 0,
       performanceDetails: {},
       takenSeats: [],
       errorMsg: '',
-        emptyContact:true,
-        emptyPay:true,
-    contactData : {
+      paymentData: {
+        cvv: '',
+        cardHolder: '',
+        cardNumber: '',
+        expMonth: '',
+        expYear: '',
+        cardType:'',
+      },
+      contactData: {
         surname: '',
-        gender:'',
+        gender: '',
         name: '',
         mobile: '',
         email: '',
-    },
+      },
       showPayCogWheel: false,
       spectatorsList: [
         {
@@ -65,57 +72,49 @@ class BookSpectacle extends Component {
     this.clearSpectators = this.clearSpectators.bind(this);
     this.resetSeats = this.resetSeats.bind(this);
     this.pay = this.pay.bind(this);
+
+    this.updateContactData = this.updateContactData.bind(this);
   }
 
+  updateContactData(data) {
+    console.log(data);
+    this.setState({
+      contactData: data,
+    });
+  }
+
+
   pay() {
-    // validations
-      var contactData = [this.state.contactData.gender,this.state.contactData.surname,
-          this.state.contactData.name, this.state.contactData.mobile,this.state.contactData.email  ]
-
-      var emptyContact = (contactData.filter(conVar => conVar === '').length >0);
-
-
-    console.log('Pay !!');
-
-
-    const self  = this;
+    const self = this;
     this.setState({
       showPayCogWheel: true,
     });
 
-      let ppl = [];
-      this.state.spectatorsList.filter(sp => sp.active).forEach(p => {
-        ppl.push(
-              {
-                type: p.type,
-                seat:p.set
-              }
-              );
+    const ppl = [];
+    this.state.spectatorsList.filter(sp => sp.active).forEach((p) => {
+      ppl.push(
+        {
+          type: p.type,
+          seat: p.set,
+        },
+      );
+    });
+
+    console.log(ppl);
+
+    axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/book`, { postData: { people: ppl } })
+      .then((responseObj) => {
+        const responseData = responseObj.data;
+
+        this.props.history.push('/finished');
+      }).catch((err) => {
+        self.setState({
+          errorMsg: err.message,
+          showPayCogWheel: false,
+        });
+
+        this.props.history.push('/finished');
       });
-
-      console.log(ppl);
-
-      axios.post(`${process.env.REACT_APP_API_ENDPOINT}/api/book`,  {
-          postData: {people:ppl}})
-          .then((responseObj) => {
-              const responseData = responseObj.data;
-
-              this.props.history.push('/finished');
-
-
-          }).catch((err) => {
-
-          self.setState({
-              errorMsg: err.message,
-              showPayCogWheel: false,
-          });
-
-          this.props.history.push('/finished');
-
-
-      });
-
-
   }
 
 
@@ -282,6 +281,11 @@ class BookSpectacle extends Component {
     const selectedSpectType = get_selectedSpectType(this.state.spectatorsList);
     const onlyChildSpects = get_onlyChildSpects(this.state.spectatorsList);
     const spectatorCount = get_spectatorCount(this.state.spectatorsList);
+    const emptyContactDetails = emptyContactVars(this.state.contactData);
+    const emptyPayDetails = emptyContactVars(this.state.paymentData);
+
+
+    const canProceedToPay = (onlyChildSpects === false) && (allPaxesHaveSeats(this.state.spectatorsList) === true) && (emptyContactDetails === false) && (emptyPayDetails === false);
 
 
     return (
@@ -293,7 +297,6 @@ class BookSpectacle extends Component {
                 <Error message={this.state.errorMsg} />
               )
           }
-
 
 
         <section id="zonePrices">
@@ -348,28 +351,38 @@ class BookSpectacle extends Component {
           </div>
 
 
-          <Contact/>
+          <Contact updateParent={this.updateContactData} />
 
-          {(onlyChildSpects === false && allPaxesHaveSeats(this.state.spectatorsList) === true)
-                      && <Payment pay={this.pay} />
-                      }
+          <Payment />
+
+          {canProceedToPay === true
+                && (
+                <div className="row paymentRow">
+                  <div className="col-4 offset-4">
+                    <button className="btn btn-success" onClick={this.pay}>Complete Payment!</button>
+                  </div>
+                </div>
+                )
+            }
+
 
           {allPaxesHaveSeats(this.state.spectatorsList) === false
                 && <Error message="Not all spectators have seats" />
             }
 
-            {this.state.emptyContact &&
-                <Error message="Empty Contact Details" />
+          {emptyContactDetails
+                && <Error message="Empty Contact Details" />
             }
 
-            {this.state.emptyPay &&
-            <Error message="Empty Payment Details" />
+          {emptyPayDetails
+            && <Error message="Empty Payment Details" />
             }
+
 
           <PriceBox spectatorsList={this.state.spectatorsList} />
 
-            {this.state.showPayCogWheel &&
-            <CogWheel/>
+          {this.state.showPayCogWheel
+            && <CogWheel />
             }
 
 

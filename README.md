@@ -14,3 +14,7 @@ Spring Hibernate
 TODO 
 SSR ???
 Datepicker
+True seat map of theater (not square projection )
+Context API
+
+TESTS

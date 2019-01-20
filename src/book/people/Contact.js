@@ -4,13 +4,66 @@ import '../styles/contact.css';
 class Contact extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      surname: '',
+      gender: '',
+      name: '',
+      mobile: '',
+      email: '',
+    };
+
+    this.editName = this.editName.bind(this);
+    this.editSurname = this.editSurname.bind(this);
+    this.editMail = this.editMail.bind(this);
+    this.editMobile = this.editMobile.bind(this);
+      this.editGender = this.editGender.bind(this);
+
   }
- editName(){
 
- },
-    editSurname(){
+    editGender(ev){
+        this.setState({
+            gender: ev.target.value,
+        });
+        this.props.updateParent(this.state);
+    }
 
-    },
+
+  editName(ev) {
+    console.log(ev.target.value);
+    this.setState({
+      name: ev.target.value,
+    });
+    this.props.updateParent(this.state);
+  }
+
+  editSurname(ev) {
+    console.log(ev.target.value);
+    this.setState({
+      surname: ev.target.value,
+    });
+      this.props.updateParent(this.state);
+
+  }
+
+  editMail(ev) {
+    console.log(ev.target.value);
+    this.setState({
+      email: ev.target.value,
+    });
+      this.props.updateParent(this.state);
+
+  }
+
+
+  editMobile(ev) {
+    console.log(ev.target.value);
+    this.setState({
+      mobile: ev.target.value,
+    });
+      this.props.updateParent(this.state);
+
+  }
 
   render() {
     return (
@@ -34,6 +87,7 @@ class Contact extends Component {
                       aria-controls="collapseExample"
                     >
 
+
 Toggle
                     </button>
                   </div>
@@ -44,26 +98,29 @@ Toggle
               <div className="card-body show" id="ContactCollapse">
                 <div className="row contactRow ">
                   <div className="col-2">
-                    <select className="form-control">
+                    <select className="form-control" onChange={this.editGender}>
                       <option />
-                      <option value="MR">Male</option>
-                      <option value="MS">Female</option>
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
                     </select>
                   </div>
                   <div className="col-5">
                     <input
                       type="text"
                       placeholder="Surname"
-                      value=""
+                      value={this.state.surname}
                       className="form-control"
+                      onChange={this.editSurname}
                     />
                   </div>
                   <div className="col-5">
                     <input
                       type="text"
                       placeholder="Name"
-                      value=""
+                      value={this.state.name}
                       className="form-control"
+                      onChange={this.editName}
+
                     />
                   </div>
                 </div>
@@ -81,14 +138,19 @@ Toggle
                     <input
                       type="text"
                       placeholder="Mobile"
+                      value={this.state.mobile}
                       className="form-control"
+                      onChange={this.editMobile}
                     />
                   </div>
                   <div className="col-5">
                     <input
                       type="text"
                       placeholder="Email"
+                      value={this.state.email}
                       className="form-control"
+                      onChange={this.editMail}
+
                     />
                   </div>
                 </div>

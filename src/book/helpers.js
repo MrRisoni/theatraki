@@ -21,3 +21,14 @@ export function get_spectatorCount(spectatorsList) {
 export function allPaxesHaveSeats(spectatorsList) {
    return  (spectatorsList.filter(spl => (spl.active && spl.seat === '')).length === 0);
 }
+
+export function emptyContactVars(contactDetails) {
+    var array = [];
+    for(var key in contactDetails) {
+        array.push(contactDetails[key]);
+    }
+    console.log('emptyContactVars');
+    console.log(array);
+    console.log(array.filter(conVar => conVar === '').length > 0)
+    return (array.filter(conVar => conVar === '').length > 0);
+}
