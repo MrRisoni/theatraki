@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+const  seatfloor = require('./seatfloor.json');
 
 class FloorLayout extends Component {
     render() {
@@ -9,25 +10,32 @@ class FloorLayout extends Component {
 
         const seatI = {
             top: '656px',
-            'background-color' : 'red',
+            'backgroundColor' : 'red',
             position: 'absolute'
         }
 
-        const seatII = {
-            top: '645px',
-            left :'150px',
-            'background-color' : 'red',
-            position: 'absolute'
-        }
+        console.log(seatfloor)
 
         return (
-            <div style={pStyle}> Component FloorLayout
+            <section id="seatFloor">
+            new Seatmap
+                {seatfloor.map(seatItem => {
+
+                        let  seatItemStyle = {
+                                    top:  seatItem.top,
+                                    left: seatItem.left,
+                                    'backgroundColor' : 'red',
+                                    position: 'absolute'
+                                }
+                                           
+                    return ( <button key={seatItem.id} type="button" style={seatItemStyle}
+                       className="floorSeatButton"></button>)
+                })}
 
 
-                     <button type="button" style={seatI} className="floorSeat"></button>
-                <button type="button" style={seatII} className="floorSeat"></button>
 
-            </div>
+
+            </section>
 
         );
     }
