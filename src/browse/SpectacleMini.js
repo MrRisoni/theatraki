@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import React, {Component} from 'react';
 import moment from 'moment';
+import {Link} from 'react-router-dom';
 
 
 class  SpectacleMini extends Component {
@@ -12,6 +13,9 @@ class  SpectacleMini extends Component {
 
     handleBookClick()
     {
+
+
+        this.props.history.push('/finished');
 
     }
 
@@ -55,7 +59,9 @@ class  SpectacleMini extends Component {
                             </div>
 
                             <div className="col-3">
-                                <button type="button" className="btn btn-primary" onClick={this.handleBookClick}>Book</button>
+                                <button type="button" className="btn btn-primary">
+                                    <Link to={`/book/${this.props.venue.performanceId}`}>Book</Link>
+                                </button>
 
                             </div>
                         </div>

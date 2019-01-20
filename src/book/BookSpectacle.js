@@ -234,12 +234,15 @@ class BookSpectacle extends Component {
   componentDidMount() {
     const self = this;
     console.log(process.ENV);
-    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/prebook`)
+
+    console.log(this.props.match.params);
+
+    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/prebook/${this.props.match.params.performanceId}`)
       .then((responseObj) => {
         const responseData = responseObj.data;
 
         self.setState({
-          maxRows: responseData.maxRows,
+          maxRows: responseData.maxRows + 2,
           maxCols: responseData.maxCols,
           mapping: responseData.seatmap,
           fetched: true,

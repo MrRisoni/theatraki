@@ -3,7 +3,7 @@ import lodash from 'lodash';
 import Seat from './Seat';
 
 const SeatRows = (props) => {
-  const colsArray = lodash.range(1, props.maxCols);
+  const colsArray = lodash.range(1, props.maxCols+ 5); //some represent the corridor
   let keyId = '';
   let seatName = '';
   let zoneId = 0;
