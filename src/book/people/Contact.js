@@ -4,13 +4,13 @@ import '../styles/contact.css';
 class Contact extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      surname: '',
-        name:'',
-        mobile:'',
-        email:'',
-    };
   }
+ editName(){
+
+ },
+    editSurname(){
+
+    },
 
   render() {
     return (
@@ -33,6 +33,7 @@ class Contact extends Component {
                       aria-expanded="false"
                       aria-controls="collapseExample"
                     >
+
 Toggle
                     </button>
                   </div>

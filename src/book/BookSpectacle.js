@@ -32,6 +32,15 @@ class BookSpectacle extends Component {
       performanceDetails: {},
       takenSeats: [],
       errorMsg: '',
+        emptyContact:true,
+        emptyPay:true,
+    contactData : {
+        surname: '',
+        gender:'',
+        name: '',
+        mobile: '',
+        email: '',
+    },
       showPayCogWheel: false,
       spectatorsList: [
         {
@@ -60,7 +69,15 @@ class BookSpectacle extends Component {
 
   pay() {
     // validations
+      var contactData = [this.state.contactData.gender,this.state.contactData.surname,
+          this.state.contactData.name, this.state.contactData.mobile,this.state.contactData.email  ]
+
+      var emptyContact = (contactData.filter(conVar => conVar === '').length >0);
+
+
     console.log('Pay !!');
+
+
     const self  = this;
     this.setState({
       showPayCogWheel: true,
@@ -331,7 +348,7 @@ class BookSpectacle extends Component {
           </div>
 
 
-          <Contact />
+          <Contact/>
 
           {(onlyChildSpects === false && allPaxesHaveSeats(this.state.spectatorsList) === true)
                       && <Payment pay={this.pay} />
@@ -339,6 +356,14 @@ class BookSpectacle extends Component {
 
           {allPaxesHaveSeats(this.state.spectatorsList) === false
                 && <Error message="Not all spectators have seats" />
+            }
+
+            {this.state.emptyContact &&
+                <Error message="Empty Contact Details" />
+            }
+
+            {this.state.emptyPay &&
+            <Error message="Empty Payment Details" />
             }
 
           <PriceBox spectatorsList={this.state.spectatorsList} />
