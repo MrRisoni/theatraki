@@ -36,12 +36,12 @@ a {
 
 #seatFloor {
     height: 700px;
-    background-color:#f9fafc;
+    background-color:#F7F2E7;
 }
 
 .floorSeatButton {
   margin-left: 15%;
-     width: 12px;
+     width: 10px;
     height: 10px;
     border: 0;
     box-shadow: none;
