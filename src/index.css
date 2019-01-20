@@ -22,3 +22,14 @@ code {
 a {
     color:white;
 }
+
+
+.floorSeat {
+    margin-right: 1px;
+    margin-left: 1px;
+    width: 12px;
+    height: 10px;
+    border: 0;
+    box-shadow: none;
+    border-radius: 0;
+}

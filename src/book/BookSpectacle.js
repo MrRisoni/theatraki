@@ -20,6 +20,7 @@ import {
 import './styles/bookspectacle.css';
 import Error from '../common/Error';
 import CogWheel from '../common/CogWheel';
+import FloorLayout from "./floorplan/FloorLayout";
 
 class BookSpectacle extends Component {
   constructor(props) {
@@ -299,17 +300,17 @@ class BookSpectacle extends Component {
           }
 
 
-        <section id="zonePrices">
+          {/*   <section id="zonePrices">
 
           {this.state.fetched
                       && <ZonePricing zones={this.state.performanceDetails.pricesList} />
                       }
-        </section>
+        </section> */}
 
         <section>
 
 
-          {this.state.fetched
+            {/* {this.state.fetched
                       && (
                       <SeatMap
                         maxRows={this.state.maxRows}
@@ -324,7 +325,8 @@ class BookSpectacle extends Component {
                       />
                       )
                       }
-
+*/}
+<FloorLayout/>
 
           <SpectatorList
             resetSeats={this.resetSeats}
