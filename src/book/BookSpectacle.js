@@ -39,7 +39,7 @@ class BookSpectacle extends Component {
         cardNumber: '',
         expMonth: '',
         expYear: '',
-        cardType:'',
+        cardType: '',
       },
       contactData: {
         surname: '',
@@ -74,7 +74,16 @@ class BookSpectacle extends Component {
     this.pay = this.pay.bind(this);
 
     this.updateContactData = this.updateContactData.bind(this);
+
+    this.updatePaymentData = this.updatePaymentData.bind(this);
   }
+
+  updatePaymentData(data) {
+    this.setState({
+      paymentData: data,
+    });
+  }
+
 
   updateContactData(data) {
     console.log(data);
@@ -353,7 +362,7 @@ class BookSpectacle extends Component {
 
           <Contact updateParent={this.updateContactData} />
 
-          <Payment />
+          <Payment updateParent={this.updatePaymentData} />
 
           {canProceedToPay === true
                 && (
