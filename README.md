@@ -10,9 +10,9 @@ Back-End repo https://github.com/MrRisoni/theatronapi
 Spring Hibernate
 
 
-
+stage scene size with hand
+SSR???
 TODO 
-SSR ???
 Datepicker
 True seat map of theater (not square projection )
 Context API
