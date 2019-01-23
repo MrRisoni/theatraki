@@ -14,7 +14,6 @@ stage scene size with hand
 SSR???
 TODO 
 Datepicker
-True seat map of theater (not square projection )
 Context API
 
 TESTS

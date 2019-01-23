@@ -24,19 +24,10 @@ a {
 }
 
 
-.seatBtn {
-    margin-right: 1px;
-    margin-left: 1px;
-    width: 12px;
-    height: 10px;
-    border: 0;
-    box-shadow: none;
-    border-radius: 0;
-}
-
 #seatFloor {
     height: 700px;
     background-color:#F7F2E7;
+    position: relative;
 }
 
 .floorSeatButton {
@@ -45,7 +36,6 @@ a {
   background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
-  margin-left: 15%;
   cursor: pointer;
 
 }
@@ -53,4 +43,9 @@ a {
 .stageDiv {
     margin-top: 2%;
     text-align: center;
+}
+
+
+#zonePricesCollapse {
+    font-size: 13px;
 }

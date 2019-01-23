@@ -20,7 +20,7 @@ import {
 import './styles/bookspectacle.css';
 import Error from '../common/Error';
 import CogWheel from '../common/CogWheel';
-import FloorLayout from "./floorplan/FloorLayout";
+import FloorLayout from './floorplan/FloorLayout';
 
 class BookSpectacle extends Component {
   constructor(props) {
@@ -30,6 +30,7 @@ class BookSpectacle extends Component {
       zones: [],
       performanceDetails: {},
       takenSeats: [],
+      seatArray: [],
       errorMsg: '',
       paymentData: {
         cvv: '',
@@ -37,7 +38,7 @@ class BookSpectacle extends Component {
         cardNumber: '',
         expMonth: '',
         expYear: '',
-        cardType:'',
+        cardType: '',
       },
       contactData: {
         surname: '',
@@ -258,7 +259,8 @@ class BookSpectacle extends Component {
         self.setState({
           fetched: true,
           performanceDetails: responseData.performance,
-          zones: responseData.performance.pricesList,
+          zones: responseData.zones,
+          seatArray: responseData.seats,
           takenSeats: responseData.taken,
         });
       }).catch((err) => {
@@ -294,7 +296,7 @@ class BookSpectacle extends Component {
           }
 
 
-           <section id="zonePrices">
+        <section id="zonePrices">
 
           {this.state.fetched
                       && <ZonePricing zones={this.state.performanceDetails.pricesList} />
@@ -303,14 +305,22 @@ class BookSpectacle extends Component {
 
         <section>
 
+          {this.state.fetched
+                  && (
+                  <FloorLayout
+                    spectatorsList={this.state.spectatorsList}
+                    seatArray={this.state.seatArray}
+                    zones={this.state.zones}
+                    selectedSeats={selectedSeats}
+                    selectedSpecType={selectedSpectType}
+                    pricing={this.state.performanceDetails.pricesList}
+                    takenSeats={this.state.takenSeats}
+                    updateSeat={this.updateSeat}
+                  />
+                  )
 
+            }
 
-<FloorLayout   spectatorsList={this.state.spectatorsList}
-               selectedSeats={selectedSeats}
-               selectedSpecType={selectedSpectType}
-               pricing={this.state.performanceDetails.pricesList}
-               takenSeats={this.state.takenSeats}
-               updateSeat={this.updateSeat}/>
 
           <SpectatorList
             resetSeats={this.resetSeats}
