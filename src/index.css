@@ -22,3 +22,30 @@ code {
 a {
     color:white;
 }
+
+
+#seatFloor {
+    height: 700px;
+    background-color:#F7F2E7;
+    position: relative;
+}
+
+.floorSeatButton {
+  height: 10px;
+  width: 10px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+
+}
+
+.stageDiv {
+    margin-top: 2%;
+    text-align: center;
+}
+
+
+#zonePricesCollapse {
+    font-size: 13px;
+}

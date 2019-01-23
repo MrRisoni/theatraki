@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import axios from 'axios';
-import SeatMap from './seatmap/SeatMap';
 import SpectatorList from './people/SpectatorList';
 import Contact from './people/Contact';
 import Payment from './people/Payment';
 import PriceBox from './PriceBox';
 import ZonePricing from './ZonePricing';
+
 import {
   get_onlyChildSpects,
   get_selectedSpectType,
@@ -20,18 +20,17 @@ import {
 import './styles/bookspectacle.css';
 import Error from '../common/Error';
 import CogWheel from '../common/CogWheel';
+import FloorLayout from './floorplan/FloorLayout';
 
 class BookSpectacle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mapping: [],
       fetched: false,
       zones: [],
-      maxRows: 0,
-      maxCols: 0,
       performanceDetails: {},
       takenSeats: [],
+      seatArray: [],
       errorMsg: '',
       paymentData: {
         cvv: '',
@@ -267,12 +266,10 @@ class BookSpectacle extends Component {
         const responseData = responseObj.data;
 
         self.setState({
-          maxRows: responseData.maxRows + 2,
-          maxCols: responseData.maxCols,
-          mapping: responseData.seatmap,
           fetched: true,
           performanceDetails: responseData.performance,
-          zones: responseData.performance.pricesList,
+          zones: responseData.zones,
+          seatArray: responseData.seats,
           takenSeats: responseData.taken,
         });
       }).catch((err) => {
@@ -317,22 +314,21 @@ class BookSpectacle extends Component {
 
         <section>
 
-
           {this.state.fetched
-                      && (
-                      <SeatMap
-                        maxRows={this.state.maxRows}
-                        maxCols={this.state.maxCols}
-                        spectatorsList={this.state.spectatorsList}
-                        mapping={this.state.mapping}
-                        selectedSeats={selectedSeats}
-                        selectedSpecType={selectedSpectType}
-                        pricing={this.state.performanceDetails.pricesList}
-                        takenSeats={this.state.takenSeats}
-                        updateSeat={this.updateSeat}
-                      />
-                      )
-                      }
+                  && (
+                  <FloorLayout
+                    spectatorsList={this.state.spectatorsList}
+                    seatArray={this.state.seatArray}
+                    zones={this.state.zones}
+                    selectedSeats={selectedSeats}
+                    selectedSpecType={selectedSpectType}
+                    pricing={this.state.performanceDetails.pricesList}
+                    takenSeats={this.state.takenSeats}
+                    updateSeat={this.updateSeat}
+                  />
+                  )
+
+            }
 
 
           <SpectatorList

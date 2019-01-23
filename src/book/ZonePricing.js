@@ -27,7 +27,7 @@ const ZonePricing = (props) => {
           </div>
 
           <section id="zonePricesCollapse" className="show">
-            <table className=" table table-bordered table-striped table-sm ">
+            <table className=" table table-bordered  table-sm ">
               <thead>
                 <tr>
                   <th scope="col">Zone</th>
@@ -40,7 +40,7 @@ const ZonePricing = (props) => {
                   const key = `zpkey_${zonep.zone.id}_${zonep.typ.title}`;
 
                   return (
-                    <tr style={{ background: `#${zonep.zone.css}` }} key={key}>
+                    <tr style={{ color: `#${zonep.zone.cssColor}` }} key={key}>
                         <td>{zonep.zone.title}</td>
 
                         <td>
