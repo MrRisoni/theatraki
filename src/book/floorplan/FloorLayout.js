@@ -7,7 +7,8 @@ class FloorLayout extends Component {
         super(props)
         this.state = {
             seatArray: [],
-            fetched:false
+            fetched:false,
+            zones:[],
         }
     }
 
@@ -18,7 +19,8 @@ class FloorLayout extends Component {
        axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/seatfloor/1`).then(rsp => {
            console.log(rsp.data);
             self.setState({
-                seatArray:rsp.data,
+                seatArray:rsp.data.seats,
+                zones: rsp.data.zones,
                 fetched:true
             })
        }).catch(err => {
@@ -28,6 +30,10 @@ class FloorLayout extends Component {
     }
     render() {
 
+
+        console.log('zone data');
+        console.log(this.state.zones);
+
         return (
 
             <section>
@@ -36,15 +42,22 @@ class FloorLayout extends Component {
                 <section id="seatFloor">
 
                     {this.state.seatArray.map(seatItem => {
+                        console.log('--------------');
+
+                        console.log('zoneitem zine ' + seatItem.zoneId);
+                        console.log(this.state.zones.filter(zn => zn.id == seatItem.zoneId));
+
+
+                        let  color = '#'+ this.state.zones.filter(zn => zn.id == seatItem.zoneId)[0].cssColor;
 
                         let seatItemStyle = {
                             top: seatItem.top,
                             left: seatItem.left,
-                            'backgroundColor': seatItem.color,
+                            'backgroundColor': color,
                             position: 'absolute'
                         }
 
-                        return (<span key={seatItem.id} style={seatItemStyle}
+                        return (<span key={seatItem.id} data-id={seatItem.id} style={seatItemStyle}
                                       className="floorSeatButton"></span>)
 
                     })}
