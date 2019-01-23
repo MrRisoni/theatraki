@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/seat.css';
 
-class Seat extends Component {
+class SeatButton extends Component {
   constructor(props) {
     super(props);
 
@@ -11,7 +11,8 @@ class Seat extends Component {
 
   clickSeat() {
     console.log(this.props);
-    this.props.updateSeat(this.props.seatName, this.props.zoneId);
+    console.log('click span');
+   // this.props.updateSeat(this.props.seatName, this.props.zoneId);
   }
 
 
@@ -21,11 +22,7 @@ class Seat extends Component {
     let disabledButton = false;
 
 
-    if (this.props.seatName === '') {
-      cssColor = '#ffff';
-      className = '';
-      disabledButton = true;
-    } else {
+
       // check if this seat is supported by the current selected spectator type
       const priceExists = this.props.pricing.filter(pr => pr.typ.title === this.props.selectedSpecType && pr.zone.id === this.props.zoneId).length > 0;
       if (priceExists === true) {
@@ -49,7 +46,7 @@ class Seat extends Component {
         disabledButton = true;
         className = ' seatNotSupported ';
       }
-    }
+
 
     return { cssColor, disabledButton, className };
   }
@@ -57,19 +54,24 @@ class Seat extends Component {
   render() {
     const attributes = this.decideSeatAttrs();
 
+      let seatItemStyle = {
+          top: this.props.top,
+          left: this.props.left,
+          'backgroundColor': this.props.color,
+          position: 'absolute',
+      }
+
     return (
 
-      <button
-        disabled={attributes.disabledButton}
-        type="button"
+      <span
         onClick={this.clickSeat}
-        style={{ background: attributes.cssColor }}
-        className={`seatBtn ${attributes.className}`}
-      />
+        style={seatItemStyle}
+        className={`floorSeatButton ${attributes.className}`}
+      ></span>
 
 
     );
   }
 }
 
-export default Seat;
+export default SeatButton;

@@ -47,5 +47,10 @@ a {
   display: inline-block;
   margin-left: 15%;
   cursor: pointer;
- 
+
+}
+
+.stageDiv {
+    margin-top: 2%;
+    text-align: center;
 }

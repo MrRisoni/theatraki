@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import SeatButton from "./SeatButton";
 
 class FloorLayout extends Component {
     constructor(props)
@@ -50,15 +51,23 @@ class FloorLayout extends Component {
 
                         let  color = '#'+ this.state.zones.filter(zn => zn.id == seatItem.zoneId)[0].cssColor;
 
-                        let seatItemStyle = {
-                            top: seatItem.top,
-                            left: seatItem.left,
-                            'backgroundColor': color,
-                            position: 'absolute'
-                        }
 
-                        return (<span key={seatItem.id} data-id={seatItem.id} style={seatItemStyle}
-                                      className="floorSeatButton"></span>)
+                       return ( <SeatButton
+                            key={seatItem.id}
+                            rowId={seatItem.rowId}
+                            colId={seatItem.colId}
+                            seatName={seatItem.seatName}
+                            zoneId={seatItem.zoneId}
+                            top={seatItem.top}
+                            left={seatItem.left}
+                            color={color}
+                            pricing={this.props.pricing}
+                            selectedSpecType={this.props.selectedSpecType}
+                            selectedSeats={this.props.selectedSeats}
+                            updateSeat={this.props.updateSeat}
+                            takenSeats={this.props.takenSeats} />
+                        )
+
 
                     })}
                 </section>
