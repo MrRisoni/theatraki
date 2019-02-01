@@ -5,7 +5,7 @@ const Error = (props) => {
         <div className="row notAllHaveSeats">
             <div className="col-8 offset-1">
                 <div className="alert alert-danger" role="alert">
-                    {props.message}
+                    {props.message} Try again
                 </div>
             </div>
         </div>

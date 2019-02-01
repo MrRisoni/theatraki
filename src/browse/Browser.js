@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import CogWheel from '../common/CogWheel';
 import SpectacleMini from './SpectacleMini';
+import Error from '../common/Error';
 
 class Browser extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Browser extends Component {
     this.state = {
       venues: [],
       fetched: false,
+      errorMsg: '',
     };
   }
 
@@ -24,7 +26,10 @@ class Browser extends Component {
           fetched: true,
         });
       }).catch((err) => {
+        console.log('error');
+        console.log(err);
         self.setState({
+          fetched: true,
           errorMsg: err.message,
         });
       });
@@ -33,10 +38,19 @@ class Browser extends Component {
   render() {
     return (
       <section>
-        {this.state.fetched
+
+
+        {(this.state.errorMsg !== '' && this.state.fetched)
+          && (
+          <Error message={this.state.errorMsg} />
+          )
+          }
+
+
+        {(this.state.fetched && this.state.errorMsg === '')
                     && (
                     <div className="row">
-                      {this.state.venues.map(vn => (<SpectacleMini venue={vn} />))}
+                      {this.state.venues.map(vn => (<SpectacleMini key={vn.performanceId} venue={vn} />))}
                     </div>
                     )
                 }
