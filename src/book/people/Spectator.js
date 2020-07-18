@@ -99,16 +99,6 @@ id="exampleFormControlSelect1"
 
           <div className="card-footer">
 
-              {this.props.specData.type !== 'ADT' &&
-                <div className="row">
-                      <div className="col-10 offset-1">
-                          <div className="alert alert-warning" role="alert">
-                              Seats marked with red are not available for this type
-                          </div>
-                      </div>
-                  </div>
-              }
-
               {this.props.oneChildSpect===true &&
               <div className="row">
                   <div className="col-10 offset-1">
