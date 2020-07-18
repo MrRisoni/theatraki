@@ -39,13 +39,11 @@ class Browser extends Component {
     return (
       <section>
 
-
         {(this.state.errorMsg !== '' && this.state.fetched)
           && (
           <Error message={this.state.errorMsg} />
           )
           }
-
 
         {(this.state.fetched && this.state.errorMsg === '')
                     && (

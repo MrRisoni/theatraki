@@ -7,7 +7,6 @@ class FloorLayout extends Component {
     super(props);
   }
 
-
   render() {
     return (
 
@@ -18,7 +17,6 @@ class FloorLayout extends Component {
           {this.props.seatArray.map((seatItem) => {
             const color = `#${this.props.zones.filter(zn => zn.id === seatItem.zoneId)[0].cssColor}`;
             const zoneName = this.props.zones.filter(zn => zn.id === seatItem.zoneId)[0].title;
-
 
             return (
               <SeatButton
@@ -41,20 +39,15 @@ class FloorLayout extends Component {
           })}
         </section>
 
-
         <div className="row stageDiv">
           <div className="col-6 offset-2">
             <div className="alert alert-dark" role="alert">
-
-
             Stage
             </div>
           </div>
         </div>
       </section>
-
     );
   }
 }
-
 export default FloorLayout;

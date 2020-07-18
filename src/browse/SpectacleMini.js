@@ -2,15 +2,21 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
+import CogWheel from "../common/CogWheel";
 
 class SpectacleMini extends Component {
     constructor(props) {
         super(props);
-        this.handleBookClick = this.handleBookClick.bind(this);
-    }
+        this.state = {
+            showAuthors :false
+        }
+        this.handleShowActorsClick = this.handleShowActorsClick.bind(this);
 
-    handleBookClick() {
-        this.props.history.push('/finished');
+    }
+    handleShowActorsClick() {
+       this.setState({
+           showAuthors:true
+       })
     }
 
     render() {
@@ -39,6 +45,27 @@ class SpectacleMini extends Component {
                                 Capacity {this.props.venue.avgCapacity.toFixed(2)}%
                             </div>
                         </div>
+
+                        <div className="row">
+                            <div className="col-12">
+                                <button type="button" onClick={this.handleShowActorsClick} className="btn btn-sm btn-success">Show Actors</button>
+                            </div>
+                        </div>
+
+                        {this.state.showAuthors   &&
+                            <div className="row">
+                                <div className="col-12">
+                                    <table className="table table-sm table-bordered table-striped">
+                                        {this.props.venue.actors.map(akt => (
+                                            <tr key={akt.id}>
+                                                <td>{akt.actorName}</td>
+                                                <td>{akt.characterName}</td>
+                                            </tr>
+                                        ))}
+                                    </table>
+                                </div>
+                            </div>
+                        }
 
                     </div>
 

@@ -15,12 +15,10 @@ class SeatButton extends Component {
     this.props.updateSeat(this.props.seatName, this.props.zoneId);
   }
 
-
   decideSeatAttrs() {
     let cssColor = this.props.color;
     let className = ' seatFree ';
     let disabledButton = false;
-
 
     // check if this seat is supported by the current selected spectator type
 
