@@ -11,7 +11,6 @@ const PriceBox = (props) => {
   return (
     <section>
       <div className="PriceBox">
-
         <div className="row">
           <div className="col-8 offset-1">
             <div className="card bg-info">

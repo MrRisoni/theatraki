@@ -3,30 +3,23 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import {Link} from 'react-router-dom';
 
-
-class  SpectacleMini extends Component {
+class SpectacleMini extends Component {
     constructor(props) {
         super(props);
-
         this.handleBookClick = this.handleBookClick.bind(this);
     }
 
-    handleBookClick()
-    {
-
-
+    handleBookClick() {
         this.props.history.push('/finished');
-
     }
 
-    render()
-    {
+    render() {
         return (
             <div className="col-5">
 
                 <div className="card">
                     <div className="card-header">
-                        {this.props.venue.playName} {this.props.venue.authNam}
+                        {this.props.venue.playName} {this.props.venue.authorName}
                     </div>
                     <div className="card-body">
                         <div className="row">
@@ -35,20 +28,17 @@ class  SpectacleMini extends Component {
                             </div>
                         </div>
 
-
                         <div className="row">
                             <div className="col-12">
-                                From {moment.unix(this.props.venue.fromDate / 1000).format("DD/MM/YYYY")} to {moment.unix(this.props.venue.toDate / 1000).format("DD/MM/YYYY")}
+                                From {this.props.venue.fromDate}  to {this.props.venue.toDate}
                             </div>
                         </div>
-
 
                         <div className="row">
                             <div className="col-12">
                                 Capacity {this.props.venue.avgCapacity.toFixed(2)}%
                             </div>
                         </div>
-
 
                     </div>
 
@@ -62,13 +52,10 @@ class  SpectacleMini extends Component {
                                 <button type="button" className="btn btn-primary">
                                     <Link to={`/book/${this.props.venue.performanceId}`}>Book</Link>
                                 </button>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         )
     }
