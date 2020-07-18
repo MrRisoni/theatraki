@@ -26,7 +26,7 @@ const ZonePricing = (props) => {
 
           </div>
 
-          <section id="zonePricesCollapse" className="show">
+          <section id="zonePricesCollapse" className="collapse">
             <table className=" table table-bordered table-striped table-hover table-sm ">
               <thead>
                 <tr>

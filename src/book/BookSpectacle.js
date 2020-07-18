@@ -34,7 +34,7 @@ class BookSpectacle extends Component {
     this.state = {
       fetched: false,
       zones: [],
-      performanceDetails: {},
+      pricesList:[],
       takenSeats: [],
       seatArray: [],
       errorMsg: '',
@@ -225,7 +225,7 @@ class BookSpectacle extends Component {
     const spect = spectList.filter(sp => sp.selectedForSeat === true)[0];
     spect.seat = seatName;
     spect.zoneId = zoneId;
-    spect.price = this.state.performanceDetails.pricesList.filter(zn => ((zn.zone.id === zoneId) && (zn.typ.title === spect.type)))[0].price;
+    spect.price = this.state.pricesList.filter(zn => ((zn.zone.id === zoneId) && (zn.typ.title === spect.type)))[0].price;
 
     this.setState({
       spectatorsList: spectList,
@@ -273,7 +273,7 @@ class BookSpectacle extends Component {
 
         self.setState({
           fetched: true,
-          performanceDetails: responseData.performance,
+          pricesList:responseData.pricesList,
           zones: responseData.zones,
           seatArray: responseData.seats,
           takenSeats: responseData.taken,
@@ -286,8 +286,6 @@ class BookSpectacle extends Component {
   }
 
   render() {
-    console.log('env');
-    console.log(process.env);
 
     const selectedSeats = get_selectedSeats(this.state.spectatorsList);
     const selectedSpectType = get_selectedSpectType(this.state.spectatorsList);
@@ -299,7 +297,6 @@ class BookSpectacle extends Component {
 
     const canProceedToPay = (onlyChildSpects === false) && (allPaxesHaveSeats(this.state.spectatorsList) === true) && (emptyContactDetails === false) && (emptyPayDetails === false);
 
-
     return (
 
       <main>
@@ -310,20 +307,14 @@ class BookSpectacle extends Component {
               )
           }
 
-
         <section id="zonePrices">
 
           {this.state.fetched
-                      && <ZonePricing zones={this.state.performanceDetails.pricesList} />
+                      && <ZonePricing zones={this.state.pricesList} />
                       }
         </section>
 
-
-
-
-
           <section>
-
 
 
           {this.state.fetched
@@ -334,7 +325,7 @@ class BookSpectacle extends Component {
                     zones={this.state.zones}
                     selectedSeats={selectedSeats}
                     selectedSpecType={selectedSpectType}
-                    pricing={this.state.performanceDetails.pricesList}
+                    pricing={this.state.pricesList}
                     takenSeats={this.state.takenSeats}
                     updateSeat={this.updateSeat}
                   />
