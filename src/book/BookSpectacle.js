@@ -9,11 +9,6 @@ import PriceBox from './PriceBox';
 import ZonePricing from './ZonePricing';
 
 
-
-import Konva from 'konva';
-import { Stage, Layer, Shape } from 'react-konva';
-
-
 import {
   get_onlyChildSpects,
   get_selectedSpectType,
