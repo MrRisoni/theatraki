@@ -20,6 +20,8 @@ import Error from '../common/Error';
 import CogWheel from '../common/CogWheel';
 import FloorLayout from './floorplan/FloorLayout';
 
+let theaterData =  require('./data/theater1.json');
+
 
 class BookSpectacle extends Component {
     constructor(props) {
@@ -246,17 +248,15 @@ class BookSpectacle extends Component {
 
         let performanceId = this.props.match.params.performanceId;
         setTimeout(() => {
-            let jsonData =  require('./data/theater' + performanceId + '.json');
             self.setState({
                 fetched: true,
-                performanceDetails: jsonData.performance,
-                pricesList: jsonData.performance.pricesList,
-                zones: jsonData.zones,
-                seatArray: jsonData.seats,
-                takenSeats: jsonData.taken,
+                performanceDetails: theaterData.performance,
+                pricesList: theaterData.performance.pricesList,
+                zones: theaterData.zones,
+                seatArray: theaterData.seats,
+                takenSeats: theaterData.taken,
             });
         }, 2000);
-
 
     }
 

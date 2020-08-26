@@ -1,5 +1,5 @@
-Theater Booking App (inspired from Viva) (WIP)
+Theater Booking App (inspired from Viva) 
 
-https://protected-reef-47929.herokuapp.com/book/1
+https://protected-reef-47929.herokuapp.com
 
 Back-End repo https://github.com/MrRisoni/theatronapi Spring Hibernate
