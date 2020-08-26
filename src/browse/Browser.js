@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import CogWheel from '../common/CogWheel';
 import SpectacleMini from './SpectacleMini';
 import Error from '../common/Error';
@@ -17,7 +16,7 @@ class Browser extends Component {
   componentDidMount() {
     const self = this;
     console.log(process.ENV);
-    axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/performances`)
+    /*axios.get(`${process.env.REACT_APP_API_ENDPOINT}/api/performances`)
       .then((responseObj) => {
         const responseData = responseObj.data;
 
@@ -32,7 +31,7 @@ class Browser extends Component {
           fetched: true,
           errorMsg: err.message,
         });
-      });
+      });*/
   }
 
   render() {

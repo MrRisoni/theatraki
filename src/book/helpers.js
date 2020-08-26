@@ -27,8 +27,5 @@ export function emptyContactVars(contactDetails) {
     for(var key in contactDetails) {
         array.push(contactDetails[key]);
     }
-    console.log('emptyContactVars');
-    console.log(array);
-    console.log(array.filter(conVar => conVar === '').length > 0)
     return (array.filter(conVar => conVar === '').length > 0);
 }
