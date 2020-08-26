@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import SeatButton from './SeatButton';
+import React, { Component } from "react";
+import SeatButton from "./SeatButton";
 
 class FloorLayout extends Component {
   constructor(props) {
@@ -8,14 +8,16 @@ class FloorLayout extends Component {
 
   render() {
     return (
-
       <section>
-
         <section id="seatFloor">
-
-          {this.props.seatArray.map((seatItem) => {
-            const color = `#${this.props.zones.filter(zn => zn.id === seatItem.zoneId)[0].cssColor}`;
-            const zoneName = this.props.zones.filter(zn => zn.id === seatItem.zoneId)[0].title;
+          {this.props.seatArray.map(seatItem => {
+            const color = `#${
+              this.props.zones.filter(zn => zn.id === seatItem.zoneId)[0]
+                .cssColor
+            }`;
+            const zoneName = this.props.zones.filter(
+              zn => zn.id === seatItem.zoneId
+            )[0].title;
 
             return (
               <SeatButton
@@ -41,7 +43,7 @@ class FloorLayout extends Component {
         <div className="row stageDiv">
           <div className="col-6 offset-2">
             <div className="alert alert-dark" role="alert">
-            Stage
+              Stage
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-Theater Booking App (inspired from Viva) 
+Theater Booking App (inspired from Viva)
 
 https://protected-reef-47929.herokuapp.com
 

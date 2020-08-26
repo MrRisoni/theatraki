@@ -1,11 +1,11 @@
-import React from 'react';
-import './styles/pricebox.css';
+import React from "react";
+import "./styles/pricebox.css";
 
-const PriceBox = (props) => {
+const PriceBox = props => {
   let totalPrice = props.spectatorsList
     .filter(spl => spl.active === true)
-    .map(actSpl => actSpl.price).reduce((a, b) => a + b, 0);
-
+    .map(actSpl => actSpl.price)
+    .reduce((a, b) => a + b, 0);
 
   totalPrice = totalPrice.toFixed(2);
   return (
@@ -14,16 +14,10 @@ const PriceBox = (props) => {
         <div className="row">
           <div className="col-8 offset-1">
             <div className="card bg-info">
-              <div className="card-header">
-              </div>
+              <div className="card-header" />
               <div className="card-body text-white" />
               <div className="card-footer">
-                <h3>
-Total Price {' '}
-                  {totalPrice}
-                  {' '}
-&euro;
-                </h3>
+                <h3>Total Price {totalPrice} &euro;</h3>
               </div>
             </div>
           </div>

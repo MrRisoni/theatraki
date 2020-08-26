@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
-const TicketSpectator = (props) => {
-    return (
-        <div> Stateless Component {props.name} </div>
-    )
+const TicketSpectator = props => {
+  return <div> Stateless Component {props.name} </div>;
 };
 
 export default TicketSpectator;

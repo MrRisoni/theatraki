@@ -1,15 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const ZonePricing = (props) => {
+const ZonePricing = props => {
   return (
     <section>
       <div className="row">
         <div className="col-8 offset-1">
           <div className="alert alert-primary" role="alert">
             <div className="row">
-              <div className="col-9">
-                  Zone Prices
-              </div>
+              <div className="col-9">Zone Prices</div>
 
               <div className="col-2">
                 <button
@@ -23,7 +21,6 @@ const ZonePricing = (props) => {
                 </button>
               </div>
             </div>
-
           </div>
 
           <section id="zonePricesCollapse" className="collapse">
@@ -41,35 +38,24 @@ const ZonePricing = (props) => {
 
                   return (
                     <tr style={{ color: `#${zonep.zone.cssColor}` }} key={key}>
-                        <td>{zonep.zone.title}</td>
+                      <td>{zonep.zone.title}</td>
 
-                        <td>
-                            {zonep.typ.title === 'ADT'
-                                            && <p>Adult</p>
-                                            }
-                            {zonep.typ.title === 'CHD'
-                                            && <p>Child</p>
-                                            }
-                            {zonep.typ.title === 'ELD'
-                                            && <p>Elder</p>
-                                            }
-                            {zonep.typ.title === 'STD'
-                                            && <p>Student</p>
-                                            }
-                          </td>
+                      <td>
+                        {zonep.typ.title === "ADT" && <p>Adult</p>}
+                        {zonep.typ.title === "CHD" && <p>Child</p>}
+                        {zonep.typ.title === "ELD" && <p>Elder</p>}
+                        {zonep.typ.title === "STD" && <p>Student</p>}
+                      </td>
 
-                        <td>{zonep.price.toFixed(2)}</td>
-                      </tr>);
+                      <td>{zonep.price.toFixed(2)}</td>
+                    </tr>
+                  );
                 })}
-
               </tbody>
             </table>
           </section>
-
-
         </div>
       </div>
-
     </section>
   );
 };
